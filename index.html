@@ -82,6 +82,16 @@
     background: linear-gradient(135deg, #eef0ff, #e0e3ff);
     color: #6366f1;
   }
+  .game-card.color-card .icon {
+    background: linear-gradient(135deg, #fef3c7, #fce7f3);
+  }
+  .game-card.color-card:hover:not(.disabled) {
+    border-color: #8b5cf6;
+    box-shadow: 0 16px 40px rgba(139,92,246,0.18);
+  }
+  .game-card.color-card .play-btn {
+    color: #8b5cf6;
+  }
   .game-card h3 {
     font-size: 18px;
     font-weight: 800;
@@ -128,6 +138,10 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
+  .game-card .badge.live-color {
+    background: #ede9fe;
+    color: #8b5cf6;
+  }
   .game-card .badge.coming {
     background: #fef3c7;
     color: #92400e;
@@ -166,24 +180,25 @@
         <span class="badge">Live</span>
         <div class="icon">🎁</div>
         <h3>Mystery Box</h3>
-        <p>Fun classroom game to review numbers and math. Listen to a code, enter it on the keypad, and win prizes from the mystery chest.</p>
+        <p>Listen to a code, enter it on the keypad, and win prizes from the mystery chest. Includes math mode.</p>
         <span class="play-btn">Play now</span>
       </a>
 
-      <!-- Placeholder game berikutnya -->
+      <!-- Color Sequence -->
+      <a href="color-sequence/" class="game-card color-card">
+        <span class="badge live-color">Live</span>
+        <div class="icon">🎨</div>
+        <h3>Color Sequence</h3>
+        <p>Watch the color order, remember it, and click the colors back in the same order. Memory + color recognition.</p>
+        <span class="play-btn">Play now</span>
+      </a>
+
+      <!-- Placeholder -->
       <div class="game-card disabled">
         <span class="badge coming">Soon</span>
         <div class="icon">🔤</div>
         <h3>Word Spelling</h3>
         <p>Spelling challenge with audio prompts. Coming soon.</p>
-        <span class="play-btn">Coming soon</span>
-      </div>
-
-      <div class="game-card disabled">
-        <span class="badge coming">Soon</span>
-        <div class="icon">🎯</div>
-        <h3>Sequence Memory</h3>
-        <p>Remember the sequence and type it back. Coming soon.</p>
         <span class="play-btn">Coming soon</span>
       </div>
     </div>
