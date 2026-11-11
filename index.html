@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games — Tutor Bahasa ID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background: #f7f8fb;
+    color: #1a1d2e;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .logo-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 8px 24px rgba(99,102,241,0.35);
+  }
+  h1 {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    color: #6b7280;
+    font-size: 15px;
+  }
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .game-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-decoration: none;
+    color: inherit;
+    border: 2px solid transparent;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 16px rgba(26,29,46,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .game-card:hover:not(.disabled) {
+    transform: translateY(-4px);
+    border-color: #6366f1;
+    box-shadow: 0 16px 40px rgba(99,102,241,0.18);
+  }
+  .game-card .icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    background: linear-gradient(135deg, #eef0ff, #e0e3ff);
+    color: #6366f1;
+  }
+  .game-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+  .game-card p {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .game-card .play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #6366f1;
+    margin-top: 4px;
+  }
+  .game-card .play-btn::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+  .game-card:hover .play-btn::after {
+    transform: translateX(4px);
+  }
+  .game-card.disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .game-card.disabled .play-btn {
+    color: #9ca3af;
+  }
+  .game-card .badge {
+    position: absolute;
+    top: 16px; right: 16px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: #eef0ff;
+    color: #6366f1;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .game-card .badge.coming {
+    background: #fef3c7;
+    color: #92400e;
+  }
+  footer {
+    margin-top: 64px;
+    text-align: center;
+    font-size: 12px;
+    color: #9ca3af;
+  }
+  footer a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  @media (max-width: 640px) {
+    .container { padding: 32px 16px; }
+    h1 { font-size: 24px; }
+    .games-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="logo-icon">🎮</div>
+      </div>
+      <h1>Games</h1>
+      <p class="subtitle">Interactive classroom games by Tutor Bahasa ID</p>
+    </header>
+
+    <div class="games-grid">
+      <!-- Mystery Box -->
+      <a href="mystery-box/" class="game-card">
+        <span class="badge">Live</span>
+        <div class="icon">🎁</div>
+        <h3>Mystery Box</h3>
+        <p>Fun classroom game to review numbers and math. Listen to a code, enter it on the keypad, and win prizes from the mystery chest.</p>
+        <span class="play-btn">Play now</span>
+      </a>
+
+      <!-- Placeholder game berikutnya -->
+      <div class="game-card disabled">
+        <span class="badge coming">Soon</span>
+        <div class="icon">🔤</div>
+        <h3>Word Spelling</h3>
+        <p>Spelling challenge with audio prompts. Coming soon.</p>
+        <span class="play-btn">Coming soon</span>
+      </div>
+
+      <div class="game-card disabled">
+        <span class="badge coming">Soon</span>
+        <div class="icon">🎯</div>
+        <h3>Sequence Memory</h3>
+        <p>Remember the sequence and type it back. Coming soon.</p>
+        <span class="play-btn">Coming soon</span>
+      </div>
+    </div>
+
+    <footer>
+      Made with ❤️ by <a href="https://github.com/tutorbahasaid" target="_blank" rel="noopener">Tutor Bahasa ID</a>
+    </footer>
+  </div>
+</body>
+</html>
