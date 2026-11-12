@@ -27,7 +27,7 @@
     background: linear-gradient(135deg, #f7f8fb 0%, #eef0f7 100%);
   }
   .setup-card {
-    width: 100%; max-width: 880px;
+    width: 100%; max-width: 920px;
     background: #fff; border-radius: 24px;
     padding: 32px;
     box-shadow: 0 20px 60px rgba(26,29,46,0.08);
@@ -72,7 +72,7 @@
   }
   .player-count b { color: #6366f1; }
   #playerList {
-    list-style: none; max-height: 180px; overflow-y: auto;
+    list-style: none; max-height: 160px; overflow-y: auto;
     border: 1px solid #f0f1f5; border-radius: 10px;
     background: #fafbfd; margin-bottom: 10px;
   }
@@ -133,16 +133,156 @@
     margin-top: 8px;
   }
   .audio-progress.done { background: #ecfdf5; color: #10b981; }
-  .btn-start {
-    width: 100%;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: #fff; border: none;
-    padding: 16px; border-radius: 14px;
-    font-size: 16px; font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(99,102,241,0.3);
+
+  /* ===== PRIZE SETTINGS ===== */
+  .prize-settings {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f1f5;
   }
-  .btn-start:disabled { opacity: 0.4; cursor: not-allowed; }
+  #prizeList {
+    display: flex; flex-direction: column;
+    gap: 6px; margin-bottom: 8px;
+    max-height: 220px; overflow-y: auto;
+    padding-right: 4px;
+  }
+  .prize-row {
+    display: grid;
+    grid-template-columns: 52px 1fr 70px 36px;
+    gap: 6px; align-items: center;
+  }
+  .prize-row input {
+    width: 100%; padding: 9px 10px;
+    border: 2px solid #e5e7eb; border-radius: 8px;
+    font-family: inherit; font-size: 13px; color: #1a1d2e; outline: none;
+  }
+  .prize-row input:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  .prize-row .prize-emoji-btn {
+    width: 100%; height: 38px;
+    border: 2px solid #e5e7eb; border-radius: 8px;
+    background: #fff; cursor: pointer;
+    font-size: 20px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .prize-row .prize-emoji-btn:hover {
+    border-color: #6366f1;
+    background: #eef0ff;
+    transform: scale(1.05);
+  }
+  .prize-row input.prize-qty { text-align: center; font-weight: 700; }
+  .prize-row .prize-remove {
+    background: #fef2f2; border: 2px solid #fecaca; color: #ef4444;
+    border-radius: 8px; height: 36px; cursor: pointer;
+    font-size: 14px; font-weight: 700;
+  }
+  .prize-row .prize-remove:hover:not(:disabled) { background: #fee2e2; }
+  .prize-row .prize-remove:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-add-prize {
+    width: 100%;
+    background: #f3f4f8; border: 2px dashed #d1d5db; color: #6b7280;
+    padding: 10px; border-radius: 8px;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .btn-add-prize:hover { border-color: #6366f1; color: #6366f1; background: #eef0ff; }
+  .prize-total {
+    font-size: 12px; color: #6b7280; text-align: center;
+    padding: 10px; background: #f9fafb; border-radius: 8px; font-weight: 600;
+  }
+  .prize-total b { color: #6366f1; font-weight: 800; }
+
+  /* ===== EMOJI PICKER ===== */
+  .emoji-picker-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,29,46,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 150;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+    padding: 20px;
+  }
+  .emoji-picker-overlay.show { opacity: 1; pointer-events: auto; }
+  .emoji-picker {
+    background: #fff; border-radius: 20px;
+    max-width: 520px; width: 100%;
+    max-height: 84vh; overflow-y: auto;
+    box-shadow: 0 30px 80px rgba(26,29,46,0.25);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .emoji-picker-overlay.show .emoji-picker { transform: scale(1); }
+  .emoji-picker-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f1f5;
+    position: sticky; top: 0; background: #fff;
+    z-index: 2; border-radius: 20px 20px 0 0;
+  }
+  .emoji-picker-header h3 { font-size: 16px; font-weight: 800; }
+  .emoji-picker-close {
+    background: none; border: none;
+    font-size: 18px; cursor: pointer;
+    color: #6b7280; padding: 4px 8px; border-radius: 6px;
+  }
+  .emoji-picker-close:hover { background: #f3f4f8; color: #1a1d2e; }
+  .emoji-picker-body { padding: 16px 20px; }
+  .emoji-custom-row {
+    display: flex; gap: 8px;
+    margin-bottom: 20px;
+  }
+  .emoji-custom-row input {
+    flex: 1; padding: 10px 14px;
+    border: 2px solid #e5e7eb; border-radius: 10px;
+    font-family: inherit; font-size: 15px; outline: none;
+    color: #1a1d2e;
+  }
+  .emoji-custom-row input:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  .emoji-custom-row .custom-preview {
+    width: 52px; height: 44px;
+    border: 2px solid #e5e7eb; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; background: #fafbfd;
+  }
+  .emoji-custom-row button {
+    padding: 10px 20px;
+    background: #6366f1; color: #fff;
+    border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+  }
+  .emoji-custom-row button:hover { background: #4f46e5; }
+  .emoji-category { margin-bottom: 16px; }
+  .emoji-category-title {
+    font-size: 11px; font-weight: 700;
+    color: #6b7280; text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 4px;
+  }
+  .emoji-grid button {
+    aspect-ratio: 1 / 1;
+    border: 2px solid transparent;
+    background: #fafbfd;
+    border-radius: 8px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.1s;
+    padding: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .emoji-grid button:hover {
+    background: #eef0ff;
+    border-color: #6366f1;
+    transform: scale(1.15);
+  }
+  .emoji-grid button:active { transform: scale(1.05); }
 
   /* ===== GAME ===== */
   #gameScreen {
@@ -231,8 +371,7 @@
     flex-shrink: 0;
   }
   .panel-player .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .panel-player .prize-emoji { display: flex; align-items: center; }
-  .panel-player .prize-emoji img { width: 22px; height: 22px; object-fit: contain; display: block; }
+  .panel-player .prize-emoji { display: flex; align-items: center; font-size: 16px; }
   .panel-player.failed-item { background: #fef2f2; color: #b91c1c; }
   .panel-player.failed-item .avatar { background: #ef4444; color: #fff; }
   .panel-player.won-item { background: #ecfdf5; color: #059669; }
@@ -293,7 +432,6 @@
     filter: drop-shadow(0 10px 30px rgba(251,191,36,0.7));
     transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s;
   }
-  .prize-float img { width: 110px; height: 110px; object-fit: contain; }
   .chest.open .prize-float {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) translateY(-160px);
@@ -429,7 +567,6 @@
     60% { transform: scale(1.1); }
     100% { transform: scale(1); }
   }
-
   .picked-actions {
     display: none; flex-wrap: wrap; gap: 8px;
     justify-content: center; width: 100%;
@@ -496,7 +633,7 @@
     75% { transform: scale(1.2); }
   }
 
-  /* ===== SLOTS (dynamic size) ===== */
+  /* ===== SLOTS ===== */
   .slots-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
   .problem-labels { display: flex; gap: 8px; visibility: hidden; }
   body[data-mode="math"] .problem-labels { visibility: visible; }
@@ -569,7 +706,6 @@
     font-size: 76px; margin-bottom: 14px;
     animation: bounceIn 0.6s;
   }
-  .overlay-icon img { width: 110px; height: 110px; object-fit: contain; }
   @keyframes bounceIn {
     0% { transform: scale(0); }
     60% { transform: scale(1.15); }
@@ -659,8 +795,7 @@
   .modal-player.active { background: #eef0ff; color: #4338ca; }
   .modal-player.active .avatar { background: #6366f1; color: #fff; }
   .modal-player.active .status-tag { background: #c7d2fe; color: #4338ca; }
-  .modal-player .prize-tag { display: flex; align-items: center; }
-  .modal-player .prize-tag img { width: 20px; height: 20px; object-fit: contain; display: block; }
+  .modal-player .prize-tag { display: flex; align-items: center; font-size: 16px; }
 
   /* State visibility */
   #playBtn, #pickBtn, .rolling-area, .picked-actions, .input-area, .problems-card {
@@ -699,6 +834,11 @@
     body[data-state="INPUT"] main { padding: 8px 14px; }
     body[data-state="INPUT"] .keys button { height: 42px; font-size: 17px; }
     body[data-state="INPUT"] .status-pill { margin-bottom: 8px; padding: 5px 12px; }
+    .prize-row { grid-template-columns: 44px 1fr 60px 32px; gap: 4px; }
+    .prize-row input { padding: 7px 8px; font-size: 12px; }
+    .emoji-grid { grid-template-columns: repeat(6, 1fr); }
+    .emoji-grid button { font-size: 20px; }
+    .emoji-picker-body { padding: 14px; }
   }
 </style>
 </head>
@@ -761,15 +901,15 @@
             <button data-value="3">3×</button>
           </div>
         </div>
-			   <div class="setting-group" id="digitCountSetting">
-		  <label>Digits (audio mode)</label>
-		  <div class="segmented" data-setting="digitCount">
-			<button data-value="2">2</button>
-			<button data-value="3" class="active">3</button>
-			<button data-value="4">4</button>
-			<button data-value="5">5</button>
-		  </div>
-		</div>
+        <div class="setting-group" id="digitCountSetting">
+          <label>Digits (audio mode)</label>
+          <div class="segmented" data-setting="digitCount">
+            <button data-value="2">2</button>
+            <button data-value="3" class="active">3</button>
+            <button data-value="4">4</button>
+            <button data-value="5">5</button>
+          </div>
+        </div>
         <div class="setting-group">
           <label>Difficulty</label>
           <div class="segmented" data-setting="difficulty">
@@ -779,6 +919,15 @@
         </div>
         <div class="audio-progress" id="audioProgress">
           <span id="audioLoadText">Loading audio 0/10</span>
+        </div>
+      </div>
+
+      <div class="setup-col prize-settings">
+        <h2 class="section-title">Prizes & Quantities</h2>
+        <div id="prizeList"></div>
+        <button id="addPrizeBtn" class="btn-add-prize">+ Add Prize</button>
+        <div class="prize-total" id="prizeTotal">
+          Total: <b id="prizeTotalNum">14</b> prizes → max <b id="prizeMaxPlayers">14</b> players
         </div>
       </div>
     </div>
@@ -866,7 +1015,7 @@
         <div class="attempts" id="attempts"></div>
         <div class="slots-container">
           <div class="problem-labels" id="problemLabels"></div>
-          <div class="slots" id="slots" data-count="5"></div>
+          <div class="slots" id="slots" data-count="3"></div>
         </div>
         <div class="keys">
           <button data-k="1">1</button>
@@ -893,6 +1042,24 @@
     </div>
     <div id="winnersList"></div>
   </aside>
+</div>
+
+<!-- EMOJI PICKER MODAL -->
+<div class="emoji-picker-overlay" id="emojiPickerOverlay">
+  <div class="emoji-picker">
+    <div class="emoji-picker-header">
+      <h3>🎨 Pick an emoji</h3>
+      <button class="emoji-picker-close" id="closeEmojiPicker">✕</button>
+    </div>
+    <div class="emoji-picker-body">
+      <div class="emoji-custom-row">
+        <div class="custom-preview" id="customPreview">🎁</div>
+        <input id="customEmojiInput" type="text" placeholder="Type or paste any emoji..." maxlength="8">
+        <button id="useCustomEmoji">Use</button>
+      </div>
+      <div id="emojiCategories"></div>
+    </div>
+  </div>
 </div>
 
 <!-- Player modal -->
@@ -964,22 +1131,14 @@
    ============================================================ */
 const CONFIG = {
   FOLDER_AUDIO: 'audio/',
-  FOLDER_SFX: 'sfx/',
   ROLL_DURATION: 2000,
   ROLL_TICK: 80,
   VIEW_DURATION: 60,
   CHEST_IDLE_VIDEO: 'videos/chest-idle.mp4',
   CHEST_OPEN_VIDEO: 'videos/chest-open.mp4',
   CHEST_POSTER: 'images/chest-poster.png',
-  HADIAH_POOL: [
-    { id: 'pensil',    label: 'Pensil',    emoji: '✏️', img: 'images/pensil.png',    jumlah: 7 },
-    { id: 'penghapus', label: 'Penghapus', emoji: '🧽', img: 'images/penghapus.png', jumlah: 7 },
-  ],
 };
-const TOTAL_PRIZES = CONFIG.HADIAH_POOL.reduce((s, p) => s + p.jumlah, 0);
-const MAX_PLAYERS = TOTAL_PRIZES;
 
-/* Jeda antar digit (ms) — semakin banyak digit, semakin lama */
 const DIGIT_DELAY = {
   2: 300,
   3: 400,
@@ -988,8 +1147,44 @@ const DIGIT_DELAY = {
 };
 
 /* ============================================================
-   SETTINGS
+   EMOJI CATEGORIES
    ============================================================ */
+const EMOJI_CATEGORIES = [
+  {
+    name: 'Stationery',
+    emojis: ['✏️','🖊️','🖍️','🖌️','📏','📐','📎','📌','📍','🔖','📓','📔','📕','📗','📘','📙','📒','📚','📖','📝','✂️','📋','🗂️','🗃️','🗄️','📁','📂']
+  },
+  {
+    name: 'Food',
+    emojis: ['🍪','🍫','🍬','🍭','🍩','🧁','🍰','🎂','🍿','🥨','🍡','🍢','🧃','🥤','🍎','🍊','🍇','🍓','🍉','🍌','🍒','🍑','🍍','🥝','🍦','🍧','🍨']
+  },
+  {
+    name: 'Toys',
+    emojis: ['🎁','🧸','🪀','🎈','🎨','🎭','🎪','🎯','🎲','🧩','🎮','🎰','🪁','🎺','🎷','🎸','🥁','🎹','🎵','🎶','⚽','🏀','🎾','🏐','🏈','⚾','🎳','🏓']
+  },
+  {
+    name: 'Rewards',
+    emojis: ['⭐','🌟','💫','✨','💎','🏆','🏅','🎖️','👑','🥇','🥈','🥉','🎗️','🔔','🎀','🌺','🌸','🌼','🌻','🌈','☀️','🌙','💖','💝','🎊','🎉','💐']
+  },
+  {
+    name: 'Snacks',
+    emojis: ['🥐','🥖','🥯','🧇','🥞','🍔','🌭','🍟','🍕','🥪','🌮','🌯','🥙','🍗','🍖','🍤','🍣','🍱','🍚','🍛','🍜','🍝','🥘','🍲']
+  },
+  {
+    name: 'Fruits',
+    emojis: ['🍏','🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥕','🌽','🌶️','🥒','🥬']
+  },
+];
+
+/* ============================================================
+   SETTINGS + PRIZES
+   ============================================================ */
+const DEFAULT_PRIZES = [
+  { id: 'pensil',    label: 'Pensil',    emoji: '✏️', jumlah: 7 },
+  { id: 'penghapus', label: 'Penghapus', emoji: '🧽', jumlah: 7 },
+];
+const STORAGE_KEY = 'mysterybox_prizes_v2';
+
 const settings = {
   mode: 'audio',
   timer: 60,
@@ -997,7 +1192,31 @@ const settings = {
   audioPlays: 2,
   difficulty: 'hard',
   digitCount: 3,
+  prizes: JSON.parse(JSON.stringify(DEFAULT_PRIZES)),
 };
+
+(function loadPrizes() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        settings.prizes = parsed.map(p => ({
+          id: p.id || 'prize',
+          label: p.label || 'Prize',
+          emoji: p.emoji || '🎁',
+          jumlah: Math.max(1, parseInt(p.jumlah) || 1),
+        }));
+      }
+    }
+  } catch (e) {}
+})();
+
+function savePrizes() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(settings.prizes)); } catch (e) {}
+}
+function getTotalPrizes() { return settings.prizes.reduce((s, p) => s + (parseInt(p.jumlah) || 0), 0); }
+function getMaxPlayers() { return getTotalPrizes(); }
 
 /* ============================================================
    GAME STATE
@@ -1044,6 +1263,18 @@ const els = {
   audioProgress: $('audioProgress'),
   audioPlaysSetting: $('audioPlaysSetting'),
   digitCountSetting: $('digitCountSetting'),
+
+  prizeList: $('prizeList'),
+  addPrizeBtn: $('addPrizeBtn'),
+  prizeTotalNum: $('prizeTotalNum'),
+  prizeMaxPlayers: $('prizeMaxPlayers'),
+
+  emojiPickerOverlay: $('emojiPickerOverlay'),
+  closeEmojiPicker: $('closeEmojiPicker'),
+  customEmojiInput: $('customEmojiInput'),
+  useCustomEmoji: $('useCustomEmoji'),
+  customPreview: $('customPreview'),
+  emojiCategories: $('emojiCategories'),
 
   roundNum: $('roundNum'),
   prizesLeft: $('prizesLeft'),
@@ -1107,7 +1338,6 @@ const els = {
   gameOverOverlay: $('gameOverOverlay'),
   playAgainBtn: $('playAgainBtn'),
 };
-els.maxPlayersNum.textContent = MAX_PLAYERS;
 
 /* ============================================================
    UTIL
@@ -1131,10 +1361,146 @@ function allEligibleFailed() {
   return game.players.every(p => game.won.has(p.id) || game.failedThisRound.has(p.id));
 }
 function prizeHtml(prize, size = 22) {
-  if (prize.img) {
-    return `<img src="${prize.img}" alt="${prize.label}" style="width:${size}px;height:${size}px;object-fit:contain;vertical-align:middle;display:inline-block;" onerror="this.replaceWith(document.createTextNode('${prize.emoji}'))">`;
+  return `<span style="font-size:${size}px;line-height:1;display:inline-block;">${prize.emoji || '🎁'}</span>`;
+}
+
+/* ============================================================
+   EMOJI PICKER
+   ============================================================ */
+let currentEmojiTargetIdx = null;
+
+function openEmojiPicker(idx) {
+  currentEmojiTargetIdx = idx;
+  els.customEmojiInput.value = '';
+  els.customPreview.textContent = '🎁';
+  renderEmojiCategories();
+  els.emojiPickerOverlay.classList.add('show');
+  setTimeout(() => els.customEmojiInput.focus(), 100);
+}
+
+function closeEmojiPicker() {
+  currentEmojiTargetIdx = null;
+  els.emojiPickerOverlay.classList.remove('show');
+}
+
+function renderEmojiCategories() {
+  els.emojiCategories.innerHTML = '';
+  EMOJI_CATEGORIES.forEach(cat => {
+    const div = document.createElement('div');
+    div.className = 'emoji-category';
+    div.innerHTML = `
+      <div class="emoji-category-title">${cat.name}</div>
+      <div class="emoji-grid">
+        ${cat.emojis.map(e => `<button data-emoji="${e}">${e}</button>`).join('')}
+      </div>
+    `;
+    div.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectEmoji(btn.dataset.emoji);
+      });
+    });
+    els.emojiCategories.appendChild(div);
+  });
+}
+
+function selectEmoji(emoji) {
+  if (currentEmojiTargetIdx === null) return;
+  if (!settings.prizes[currentEmojiTargetIdx]) return;
+  settings.prizes[currentEmojiTargetIdx].emoji = emoji;
+  savePrizes();
+  renderPrizeList();
+  closeEmojiPicker();
+}
+
+els.customEmojiInput.addEventListener('input', () => {
+  const val = els.customEmojiInput.value.trim();
+  els.customPreview.textContent = val || '🎁';
+});
+els.customEmojiInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const val = els.customEmojiInput.value.trim();
+    if (val) selectEmoji(val);
   }
-  return prize.emoji;
+});
+els.useCustomEmoji.addEventListener('click', () => {
+  const val = els.customEmojiInput.value.trim();
+  if (val) selectEmoji(val);
+});
+els.closeEmojiPicker.addEventListener('click', closeEmojiPicker);
+els.emojiPickerOverlay.addEventListener('click', (e) => {
+  if (e.target === els.emojiPickerOverlay) closeEmojiPicker();
+});
+
+/* ============================================================
+   PRIZE UI
+   ============================================================ */
+function renderPrizeList() {
+  els.prizeList.innerHTML = '';
+  settings.prizes.forEach((p, idx) => {
+    const row = document.createElement('div');
+    row.className = 'prize-row';
+    row.innerHTML = `
+      <button class="prize-emoji-btn" data-idx="${idx}" title="Pick emoji">${escapeHtml(p.emoji)}</button>
+      <input class="prize-name" data-idx="${idx}" data-field="label" value="${escapeHtml(p.label)}" maxlength="20" placeholder="Prize name">
+      <input class="prize-qty" data-idx="${idx}" data-field="jumlah" type="number" min="1" max="99" value="${p.jumlah}">
+      <button class="prize-remove" data-idx="${idx}" ${settings.prizes.length <= 1 ? 'disabled' : ''}>✕</button>
+    `;
+    els.prizeList.appendChild(row);
+  });
+
+  els.prizeList.querySelectorAll('.prize-emoji-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      openEmojiPicker(parseInt(e.currentTarget.dataset.idx));
+    });
+  });
+  els.prizeList.querySelectorAll('input').forEach(i => i.addEventListener('input', handlePrizeInput));
+  els.prizeList.querySelectorAll('.prize-remove').forEach(b => b.addEventListener('click', handlePrizeRemove));
+  updatePrizeTotals();
+}
+function handlePrizeInput(e) {
+  const input = e.target;
+  const idx = parseInt(input.dataset.idx);
+  const field = input.dataset.field;
+  if (isNaN(idx) || !settings.prizes[idx]) return;
+  if (field === 'jumlah') {
+    let v = parseInt(input.value);
+    if (isNaN(v) || v < 1) v = 1;
+    if (v > 99) v = 99;
+    settings.prizes[idx].jumlah = v;
+  } else {
+    settings.prizes[idx].label = input.value;
+  }
+  updatePrizeTotals();
+}
+function handlePrizeRemove(e) {
+  if (settings.prizes.length <= 1) return;
+  const idx = parseInt(e.currentTarget.dataset.idx);
+  if (isNaN(idx)) return;
+  settings.prizes.splice(idx, 1);
+  renderPrizeList();
+  savePrizes();
+}
+function handleAddPrize() {
+  let id = 'prize', n = 1;
+  while (settings.prizes.some(p => p.id === id)) id = 'prize' + (n++);
+  settings.prizes.push({ id, label: 'New Prize', emoji: '🎁', jumlah: 1 });
+  renderPrizeList();
+  savePrizes();
+  if (els.prizeList) els.prizeList.scrollTop = els.prizeList.scrollHeight;
+}
+function updatePrizeTotals() {
+  const total = getTotalPrizes();
+  els.prizeTotalNum.textContent = total;
+  els.prizeMaxPlayers.textContent = total;
+  els.maxPlayersNum.textContent = total;
+  if (game.players.length > total) {
+    game.players = game.players.slice(0, total);
+    renderSetupList();
+  }
+  els.addPlayerBtn.disabled = game.players.length >= total || els.playerNameInput.value.trim() === '';
+  els.startGameBtn.disabled = game.players.length < 1 || total < 1;
+  savePrizes();
 }
 
 /* ============================================================
@@ -1186,8 +1552,11 @@ function generateProblems() {
 }
 function initPrizeStock() {
   const stock = [];
-  for (const p of CONFIG.HADIAH_POOL) {
-    for (let i = 0; i < p.jumlah; i++) stock.push(p);
+  for (const p of settings.prizes) {
+    const qty = parseInt(p.jumlah) || 0;
+    for (let i = 0; i < qty; i++) {
+      stock.push({ id: p.id, label: p.label, emoji: p.emoji });
+    }
   }
   return shuffle(stock);
 }
@@ -1371,7 +1740,7 @@ function initChestVideos() {
 }
 
 /* ============================================================
-   SETUP SCREEN
+   SETUP
    ============================================================ */
 function renderSetupList() {
   els.playerList.innerHTML = '';
@@ -1382,19 +1751,20 @@ function renderSetupList() {
     els.playerList.appendChild(li);
   });
   els.playerCountNum.textContent = game.players.length;
-  els.startGameBtn.disabled = game.players.length < 1;
-  els.addPlayerBtn.disabled = game.players.length >= MAX_PLAYERS || els.playerNameInput.value.trim() === '';
+  const total = getTotalPrizes();
+  els.startGameBtn.disabled = game.players.length < 1 || total < 1;
+  els.addPlayerBtn.disabled = game.players.length >= total || els.playerNameInput.value.trim() === '';
 }
 function addPlayer() {
   const name = els.playerNameInput.value.trim();
-  if (!name || game.players.length >= MAX_PLAYERS) return;
+  if (!name || game.players.length >= getTotalPrizes()) return;
   game.players.push({ name });
   els.playerNameInput.value = '';
   renderSetupList();
   els.playerNameInput.focus();
 }
 els.playerNameInput.addEventListener('input', () => {
-  els.addPlayerBtn.disabled = els.playerNameInput.value.trim() === '' || game.players.length >= MAX_PLAYERS;
+  els.addPlayerBtn.disabled = els.playerNameInput.value.trim() === '' || game.players.length >= getTotalPrizes();
 });
 els.playerNameInput.addEventListener('keydown', e => {
   if (e.key === 'Enter') { e.preventDefault(); addPlayer(); }
@@ -1408,9 +1778,11 @@ els.playerList.addEventListener('click', e => {
 });
 els.fillDemoBtn.addEventListener('click', () => {
   const demo = ['Bella','Amelia','Lila','Oshen','Zion','Zoe','Ona','Momo','Moira','Vera','Finn','Matyan','Archer'];
-  game.players = demo.slice(0, MAX_PLAYERS).map(name => ({ name }));
+  game.players = demo.slice(0, getMaxPlayers()).map(name => ({ name }));
   renderSetupList();
 });
+els.addPrizeBtn.addEventListener('click', handleAddPrize);
+
 document.querySelectorAll('.segmented').forEach(seg => {
   const settingName = seg.dataset.setting;
   seg.querySelectorAll('button').forEach(btn => {
@@ -1641,7 +2013,7 @@ function renderPlayerModal() {
     <div class="modal-player won">
       <div class="avatar">${player.name.charAt(0).toUpperCase()}</div>
       <div class="name">${escapeHtml(player.name)}</div>
-      <span class="prize-tag">${prizeHtml(data.prize, 20)}</span>
+      <span class="prize-tag">${data.prize.emoji}</span>
     </div>`).join('');
 
   els.modalAllCount.textContent = sorted.length;
@@ -1804,8 +2176,7 @@ async function rollStudent() {
   setState('PICKED');
 }
 async function doRollAgain() {
-  if (game.state !== 'PICKED') return;
-  if (game.rollAgainLeft <= 0) return;
+  if (game.state !== 'PICKED' || game.rollAgainLeft <= 0) return;
   game.rollAgainLeft--;
   await rollStudent();
 }
@@ -1961,14 +2332,9 @@ function resetChest() {
 }
 
 function showPrize(prize, siswaName) {
-  if (prize.img) {
-    els.prizeFloat.innerHTML = `<img src="${prize.img}" alt="${prize.label}" onerror="this.replaceWith(document.createTextNode('${prize.emoji}'))">`;
-    els.winIcon.innerHTML = `<img src="${prize.img}" alt="${prize.label}" style="width:110px;height:110px;object-fit:contain;" onerror="this.replaceWith(document.createTextNode('${prize.emoji}'))">`;
-  } else {
-    els.prizeFloat.textContent = prize.emoji;
-    els.winIcon.textContent = prize.emoji;
-  }
-  els.winSub.innerHTML = `<b>${escapeHtml(siswaName)}</b> won a ${prize.label}!`;
+  els.prizeFloat.textContent = prize.emoji || '🎁';
+  els.winIcon.textContent = prize.emoji || '🎁';
+  els.winSub.innerHTML = `<b>${escapeHtml(siswaName)}</b> won a <b>${escapeHtml(prize.label)}</b>!`;
   setTimeout(() => {
     els.chest.classList.add('open');
     if (els.chestIdleVideo) els.chestIdleVideo.pause();
@@ -2046,6 +2412,7 @@ document.addEventListener('keydown', e => {
    INIT
    ============================================================ */
 renderSetupList();
+renderPrizeList();
 preloadAudio();
 initChestVideos();
 </script>
