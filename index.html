@@ -112,6 +112,17 @@
   .game-card.spelling .play-btn { color: #ec4899; }
   .game-card.spelling .badge { background: #fce7f3; color: #ec4899; }
 
+  .game-card.garuda-puzzle .icon {
+    background: linear-gradient(135deg, #ffebee, #fff8e1);
+    color: #e53935;
+  }
+  .game-card.garuda-puzzle:hover:not(.disabled) {
+    border-color: #e53935;
+    box-shadow: 0 16px 40px rgba(229,57,53,0.18);
+  }
+  .game-card.garuda-puzzle .play-btn { color: #e53935; }
+  .game-card.garuda-puzzle .badge { background: #ffebee; color: #e53935; }
+
   .game-card h3 {
     font-size: 18px;
     font-weight: 800;
@@ -212,6 +223,15 @@
         <div class="icon">✏️</div>
         <h3>Spelling</h3>
         <p>Listen and watch the word blink, then spell it letter by letter. Numbers and colors vocabulary.</p>
+        <span class="play-btn">Play now</span>
+      </a>
+
+      <!-- Garuda Puzzle -->
+      <a href="garuda-puzzle/" class="game-card garuda-puzzle">
+        <span class="badge">Live</span>
+        <div class="icon">🦅</div>
+        <h3>Garuda Puzzle</h3>
+        <p>Solve Pancasila-themed puzzles — arrange the Garuda, Perisai, or story sequence. Educational and fun for classroom.</p>
         <span class="play-btn">Play now</span>
       </a>
     </div>
