@@ -19,7 +19,7 @@
   }
   button { font-family: inherit; }
 
-  /* ============ SETUP ============ */
+  /* ===== SETUP ===== */
   #setupScreen {
     min-height: 100vh;
     display: flex; align-items: center; justify-content: center;
@@ -30,7 +30,7 @@
     width: 100%; max-width: 880px;
     background: #fff; border-radius: 24px;
     padding: 32px;
-    box-shadow: 0 20px 60px rgba(26,29,46,0.08), 0 4px 12px rgba(26,29,46,0.04);
+    box-shadow: 0 20px 60px rgba(26,29,46,0.08);
     max-height: 94vh; overflow-y: auto;
   }
   .setup-header { text-align: center; margin-bottom: 24px; }
@@ -56,7 +56,6 @@
     border: 2px solid #e5e7eb; border-radius: 10px;
     font-family: inherit; font-size: 14px; outline: none;
     color: #1a1d2e;
-    transition: border-color 0.2s, box-shadow 0.2s;
   }
   .input-row input:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
   .input-row button {
@@ -64,9 +63,8 @@
     background: #6366f1; color: #fff;
     border: none; border-radius: 10px;
     font-size: 14px; font-weight: 700;
-    cursor: pointer; transition: all 0.2s;
+    cursor: pointer;
   }
-  .input-row button:hover:not(:disabled) { background: #4f46e5; }
   .input-row button:disabled { opacity: 0.4; cursor: not-allowed; }
   .player-count {
     font-size: 12px; color: #6b7280; margin-bottom: 6px;
@@ -76,17 +74,15 @@
   #playerList {
     list-style: none; max-height: 180px; overflow-y: auto;
     border: 1px solid #f0f1f5; border-radius: 10px;
-    margin-bottom: 10px; background: #fafbfd;
+    background: #fafbfd; margin-bottom: 10px;
   }
   #playerList:empty { display: none; }
   #playerList li {
     display: flex; align-items: center; justify-content: space-between;
     padding: 9px 12px; border-bottom: 1px solid #f0f1f5;
     font-size: 14px; font-weight: 500;
-    animation: slideIn 0.2s ease;
   }
   #playerList li:last-child { border-bottom: none; }
-  @keyframes slideIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
   #playerList li .idx {
     display: inline-flex; align-items: center; justify-content: center;
     width: 22px; height: 22px;
@@ -96,14 +92,13 @@
   #playerList li .remove {
     background: none; border: none; color: #9ca3af; cursor: pointer;
     font-size: 16px; padding: 2px 6px; border-radius: 4px;
-    transition: all 0.15s;
   }
   #playerList li .remove:hover { background: #fee2e2; color: #ef4444; }
   .btn-ghost-sm {
     background: none; border: 2px dashed #d1d5db; color: #6b7280;
     padding: 8px; border-radius: 10px;
     font-size: 12px; font-weight: 600; cursor: pointer;
-    width: 100%; transition: all 0.2s;
+    width: 100%;
   }
   .btn-ghost-sm:hover { border-color: #6366f1; color: #6366f1; }
   .setting-group { margin-bottom: 14px; }
@@ -124,10 +119,7 @@
     border-radius: 7px;
     font-size: 12px; font-weight: 700;
     color: #6b7280; cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
   }
-  .segmented button:hover { color: #1a1d2e; }
   .segmented button.active {
     background: #fff; color: #6366f1;
     box-shadow: 0 2px 6px rgba(26,29,46,0.08);
@@ -138,7 +130,6 @@
     background: #eef0ff; border-radius: 10px;
     font-size: 12px; font-weight: 600;
     color: #6366f1;
-    display: flex; align-items: center; gap: 8px;
     margin-top: 8px;
   }
   .audio-progress.done { background: #ecfdf5; color: #10b981; }
@@ -148,14 +139,12 @@
     color: #fff; border: none;
     padding: 16px; border-radius: 14px;
     font-size: 16px; font-weight: 800;
-    cursor: pointer; letter-spacing: 0.3px;
+    cursor: pointer;
     box-shadow: 0 8px 24px rgba(99,102,241,0.3);
-    transition: all 0.2s;
   }
-  .btn-start:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(99,102,241,0.4); }
-  .btn-start:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+  .btn-start:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* ============ GAME ============ */
+  /* ===== GAME ===== */
   #gameScreen {
     display: grid;
     grid-template-columns: 180px 1fr 180px;
@@ -169,26 +158,25 @@
     padding: 0 20px; background: #fff; border-bottom: 1px solid #f0f1f5;
     gap: 12px;
   }
-  .header-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-  .logo { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .header-left { display: flex; align-items: center; gap: 10px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
   .logo-icon {
     width: 32px; height: 32px;
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     border-radius: 9px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px; flex-shrink: 0;
+    font-size: 16px;
   }
-  .logo h1 { font-size: 15px; font-weight: 800; letter-spacing: -0.3px; white-space: nowrap; }
-  .header-stats { display: flex; gap: 12px; align-items: center; }
+  .logo h1 { font-size: 15px; font-weight: 800; letter-spacing: -0.3px; }
+  .header-stats { display: flex; gap: 10px; align-items: center; }
   .stat { display: flex; flex-direction: column; align-items: flex-end; }
-  .stat-label { font-size: 10px; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-label { font-size: 10px; color: #6b7280; font-weight: 600; text-transform: uppercase; }
   .stat-value { font-size: 16px; font-weight: 800; color: #6366f1; }
   .icon-btn {
     background: #f3f4f8; border: none;
     width: 36px; height: 36px; border-radius: 10px;
     cursor: pointer; font-size: 16px;
     display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
     color: #4b5563;
   }
   .icon-btn:hover { background: #eef0ff; color: #6366f1; }
@@ -196,99 +184,60 @@
   body[data-state="PLAYING"] .pause-btn,
   body[data-state="VIEWING"] .pause-btn,
   body[data-state="INPUT"] .pause-btn { display: flex; }
-
   .mobile-badge {
     display: none;
     align-items: center; gap: 4px;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
+    padding: 6px 10px; border-radius: 8px;
+    font-size: 12px; font-weight: 700;
+    cursor: pointer; border: none;
     font-family: inherit;
-    transition: all 0.2s;
   }
   .mobile-badge.failed { color: #b91c1c; background: #fef2f2; }
   .mobile-badge.winners { color: #059669; background: #ecfdf5; }
-  .mobile-badge:hover { transform: translateY(-1px); }
 
-  .failed-panel {
-    grid-area: failed;
+  .failed-panel, .winners-panel {
     background: #fff;
-    border-right: 1px solid #f0f1f5;
     padding: 14px 10px;
     overflow-y: auto;
   }
-  .winners-panel {
-    grid-area: winners;
-    background: #fff;
-    border-left: 1px solid #f0f1f5;
-    padding: 14px 10px;
-    overflow-y: auto;
-  }
+  .failed-panel { grid-area: failed; border-right: 1px solid #f0f1f5; }
+  .winners-panel { grid-area: winners; border-left: 1px solid #f0f1f5; }
   .panel-title {
-    font-size: 10px; font-weight: 700;
-    color: #6b7280; text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 10px; font-weight: 700; color: #6b7280;
+    text-transform: uppercase; letter-spacing: 1px;
     margin-bottom: 10px;
     display: flex; justify-content: space-between; align-items: center;
     padding: 0 4px;
   }
-  .panel-title .count {
-    background: #eef0ff; color: #6366f1;
-    padding: 1px 7px; border-radius: 10px;
-    font-size: 10px;
-  }
-  .panel-title.winners .count { background: #d1fae5; color: #059669; }
+  .panel-title .count { padding: 1px 7px; border-radius: 10px; font-size: 10px; }
   .panel-title.failed .count { background: #fee2e2; color: #b91c1c; }
+  .panel-title.winners .count { background: #d1fae5; color: #059669; }
   .panel-empty {
     font-size: 11px; color: #9ca3af;
-    font-style: italic;
-    padding: 12px 6px;
-    text-align: center;
-    border: 2px dashed #f0f1f5;
-    border-radius: 10px;
+    font-style: italic; padding: 12px 6px; text-align: center;
+    border: 2px dashed #f0f1f5; border-radius: 10px;
     line-height: 1.5;
   }
   .panel-player {
     display: flex; align-items: center; gap: 7px;
-    padding: 8px 8px;
-    border-radius: 8px;
+    padding: 8px; border-radius: 8px;
     margin-bottom: 4px;
-    background: #fafbfd;
     font-size: 12px; font-weight: 600;
-    transition: all 0.2s;
-    animation: slideIn 0.3s ease;
   }
   .panel-player .avatar {
     width: 22px; height: 22px; border-radius: 6px;
-    background: #eef0ff; color: #6366f1;
     display: flex; align-items: center; justify-content: center;
     font-size: 10px; font-weight: 800;
     flex-shrink: 0;
   }
-  .panel-player .name {
-    flex: 1;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .panel-player .prize-emoji {
-    font-size: 13px;
-    display: flex; align-items: center;
-  }
-  .panel-player .prize-emoji img {
-    width: 22px;
-    height: 22px;
-    object-fit: contain;
-    vertical-align: middle;
-    display: block;
-  }
+  .panel-player .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .panel-player .prize-emoji { display: flex; align-items: center; }
+  .panel-player .prize-emoji img { width: 22px; height: 22px; object-fit: contain; display: block; }
   .panel-player.failed-item { background: #fef2f2; color: #b91c1c; }
   .panel-player.failed-item .avatar { background: #ef4444; color: #fff; }
   .panel-player.won-item { background: #ecfdf5; color: #059669; }
   .panel-player.won-item .avatar { background: #10b981; color: #fff; }
 
-  /* MAIN */
   main {
     grid-area: main;
     padding: 20px 24px;
@@ -297,54 +246,45 @@
     background: #f7f8fb;
   }
 
+  /* ===== SCENE (display card) ===== */
   .scene {
-  perspective: 1400px;
-  height: 340px;
-  width: 100%;
-  max-width: 420px;
-  display: flex; align-items: center; justify-content: center;
-  position: relative;
-  margin-bottom: 16px;
-  background: #cacac9;
-  border-radius: 28px;
-  box-shadow:
-    0 16px 44px rgba(26,29,46,0.14),
-    0 4px 12px rgba(26,29,46,0.06),
-    inset 0 1px 0 rgba(255,255,255,0.35);
-}
-  .chest {
-  width: 360px; height: 360px; position: relative;
-}
+    width: 100%; max-width: 400px;
+    aspect-ratio: 1 / 1;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    margin-bottom: 16px;
+    background: #cacac9;
+    border-radius: 28px;
+    box-shadow:
+      0 16px 44px rgba(26,29,46,0.14),
+      0 4px 12px rgba(26,29,46,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+  .chest { width: 100%; height: 100%; position: relative; }
   .chest-glow {
-    position: absolute; inset: -40px;
+    position: absolute; inset: -30px;
     background: radial-gradient(circle, rgba(251,191,36,0.55) 0%, transparent 60%);
     opacity: 0; pointer-events: none;
     transition: opacity 0.8s; z-index: 0;
+    border-radius: 40px;
   }
   .chest.open .chest-glow { opacity: 1; animation: glowPulse 1.5s infinite alternate; }
-  @keyframes glowPulse { from { transform: scale(0.9); } to { transform: scale(1.15); } }
+  @keyframes glowPulse { from { transform: scale(0.9); } to { transform: scale(1.1); } }
 
   .chest-video {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 260px;
-  height: 260px;
-  object-fit: contain;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  transition: opacity 0.25s ease;
-  filter: none;   /* ← dari drop-shadow(...) */
-}
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: opacity 0.25s ease;
+    filter: none;
+  }
   .chest-video-idle { opacity: 1; z-index: 1; }
   .chest-video-open { opacity: 0; z-index: 2; }
   .chest.open .chest-video-idle { opacity: 0; }
   .chest.open .chest-video-open { opacity: 1; }
-  .chest.open .chest-video-open {
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15))
-            drop-shadow(0 0 50px rgba(251,191,36,0.55));
-  }
 
   .prize-float {
     position: absolute; top: 50%; left: 50%;
@@ -360,16 +300,28 @@
     transition-delay: 0.7s;
   }
 
+  /* Compact INPUT state */
+  body[data-state="INPUT"] .scene {
+    height: 0; aspect-ratio: auto;
+    margin-bottom: 0; opacity: 0; overflow: hidden;
+    transition: height 0.2s ease, opacity 0.15s ease, margin-bottom 0.2s ease;
+  }
+  body[data-state="INPUT"] main { padding: 12px 20px; }
+  body[data-state="INPUT"] .status-pill { margin-bottom: 10px; padding: 7px 16px; font-size: 12px; }
+  body[data-state="INPUT"] .input-area { gap: 8px; }
+  body[data-state="INPUT"] .slots { gap: 6px; }
+  body[data-state="INPUT"] .keys { gap: 6px; }
+  body[data-state="INPUT"] .heart { font-size: 15px; }
+  body[data-state="INPUT"] .attempts { font-size: 11px; }
+
   /* Problems card (math mode) */
   .problems-card {
     display: none;
-    background: #fff;
-    border-radius: 24px;
+    background: #fff; border-radius: 24px;
     padding: 24px 28px;
     box-shadow: 0 12px 40px rgba(26,29,46,0.1);
     text-align: center;
-    max-width: 520px;
-    width: 100%;
+    max-width: 520px; width: 100%;
   }
   body[data-state="VIEWING"] .problems-card { display: block; }
   body[data-state="VIEWING"] .scene { display: none; }
@@ -383,31 +335,15 @@
     gap: 10px; margin-bottom: 20px;
   }
   .problem-item {
-    background: #f7f8fb;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 14px 6px;
+    background: #f7f8fb; border: 2px solid #e5e7eb;
+    border-radius: 12px; padding: 14px 6px;
     display: flex; flex-direction: column;
     align-items: center; gap: 4px;
   }
-  .problem-item .num {
-    font-size: 10px; font-weight: 700;
-    color: #9ca3af;
-  }
-  .problem-item .expr {
-    font-size: 20px; font-weight: 800;
-    color: #1a1d2e;
-    letter-spacing: 0.5px;
-  }
-  .view-timer-container {
-    display: flex; align-items: center; gap: 10px;
-    margin-top: 16px;
-  }
-  .view-timer-bar {
-    flex: 1; height: 10px;
-    background: #eef0f5; border-radius: 5px;
-    overflow: hidden;
-  }
+  .problem-item .num { font-size: 10px; font-weight: 700; color: #9ca3af; }
+  .problem-item .expr { font-size: 20px; font-weight: 800; color: #1a1d2e; letter-spacing: 0.5px; }
+  .view-timer-container { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
+  .view-timer-bar { flex: 1; height: 10px; background: #eef0f5; border-radius: 5px; overflow: hidden; }
   .view-timer-fill {
     height: 100%; width: 100%;
     background: linear-gradient(90deg, #6366f1, #8b5cf6);
@@ -417,9 +353,8 @@
   .view-timer-fill.warning { background: linear-gradient(90deg, #f59e0b, #f97316); }
   .view-timer-fill.critical { background: linear-gradient(90deg, #ef4444, #dc2626); }
   .view-timer-text {
-    font-size: 13px; font-weight: 800;
-    color: #6366f1; min-width: 36px;
-    text-align: right;
+    font-size: 13px; font-weight: 800; color: #6366f1;
+    min-width: 36px; text-align: right;
     font-variant-numeric: tabular-nums;
   }
 
@@ -440,10 +375,7 @@
     width: 7px; height: 7px; border-radius: 50%;
     background: currentColor; animation: dotPulse 1.4s infinite; flex-shrink: 0;
   }
-  @keyframes dotPulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.8); }
-  }
+  @keyframes dotPulse { 50% { opacity: 0.4; transform: scale(0.8); } }
 
   .action-area {
     width: 100%; max-width: 440px;
@@ -455,26 +387,20 @@
     font-size: 15px; font-weight: 800;
     padding: 13px 26px; border-radius: 13px; border: none;
     cursor: pointer; letter-spacing: 0.3px;
-    transition: all 0.2s;
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s;
   }
   .btn-primary {
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     color: #fff;
     box-shadow: 0 8px 24px rgba(99,102,241,0.3);
   }
-  .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(99,102,241,0.4); }
-  .btn-secondary {
-    background: #fff; color: #4338ca;
-    border: 2px solid #c7d2fe;
-  }
-  .btn-secondary:hover:not(:disabled) { background: #eef0ff; border-color: #6366f1; }
-  .btn-ghost {
-    background: transparent; color: #6b7280;
-    border: 2px solid #e5e7eb;
-  }
-  .btn-ghost:hover:not(:disabled) { background: #f9fafb; color: #374151; }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+  .btn-primary:hover:not(:disabled) { transform: translateY(-2px); }
+  .btn-secondary { background: #fff; color: #4338ca; border: 2px solid #c7d2fe; }
+  .btn-secondary:hover:not(:disabled) { background: #eef0ff; }
+  .btn-ghost { background: transparent; color: #6b7280; border: 2px solid #e5e7eb; }
+  .btn-ghost:hover:not(:disabled) { background: #f9fafb; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
   .btn-lg { font-size: 16px; padding: 15px 32px; min-width: 260px; }
   .btn-primary .countdown {
     background: rgba(255,255,255,0.25);
@@ -492,12 +418,10 @@
   .rolling-name {
     font-size: 36px; font-weight: 800; color: #6366f1;
     letter-spacing: -1px; min-height: 48px; text-align: center;
-    transition: all 0.15s;
     text-shadow: 0 4px 20px rgba(99,102,241,0.25);
   }
   .rolling-name.settled {
     color: #1a1d2e;
-    text-shadow: 0 4px 24px rgba(99,102,241,0.4);
     animation: settleBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   @keyframes settleBounce {
@@ -554,6 +478,8 @@
   }
   .heart:nth-child(2) { animation-delay: 0.15s; }
   .heart:nth-child(3) { animation-delay: 0.3s; }
+  .heart:nth-child(4) { animation-delay: 0.45s; }
+  .heart:nth-child(5) { animation-delay: 0.6s; }
   @keyframes heartbeat {
     0%, 100% { transform: scale(1); }
     14% { transform: scale(1.3); }
@@ -562,10 +488,7 @@
     56% { transform: scale(1); }
   }
   .heart.lost { animation: none; opacity: 0.18; filter: grayscale(1); }
-  .heart.urgent {
-    animation: heartbeat-urgent 0.5s ease-in-out infinite;
-    filter: drop-shadow(0 0 6px #ef4444);
-  }
+  .heart.urgent { animation: heartbeat-urgent 0.5s ease-in-out infinite; filter: drop-shadow(0 0 6px #ef4444); }
   @keyframes heartbeat-urgent {
     0%, 100% { transform: scale(1); }
     25% { transform: scale(1.4); }
@@ -573,10 +496,9 @@
     75% { transform: scale(1.2); }
   }
 
+  /* ===== SLOTS (dynamic size) ===== */
   .slots-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
-  .problem-labels {
-    display: flex; gap: 8px; visibility: hidden;
-  }
+  .problem-labels { display: flex; gap: 8px; visibility: hidden; }
   body[data-mode="math"] .problem-labels { visibility: visible; }
   .problem-label {
     width: 48px; text-align: center;
@@ -585,14 +507,22 @@
   }
   .slots { display: flex; gap: 8px; }
   .slot {
-    width: 48px; height: 58px; background: #fff;
-    border: 2px solid #e5e7eb; border-radius: 11px;
+    width: var(--slot-w, 48px);
+    height: var(--slot-h, 58px);
+    font-size: var(--slot-fs, 26px);
+    border-radius: var(--slot-r, 11px);
+    background: #fff;
+    border: 2px solid #e5e7eb;
     display: flex; align-items: center; justify-content: center;
-    font-size: 26px; font-weight: 800; color: #6366f1;
+    font-weight: 800; color: #6366f1;
     transition: all 0.15s;
     box-shadow: 0 2px 4px rgba(26,29,46,0.04);
   }
   .slot.filled { border-color: #6366f1; background: #eef0ff; }
+  .slots[data-count="2"] { --slot-w: 76px; --slot-h: 90px; --slot-fs: 42px; --slot-r: 14px; }
+  .slots[data-count="3"] { --slot-w: 64px; --slot-h: 78px; --slot-fs: 34px; --slot-r: 13px; }
+  .slots[data-count="4"] { --slot-w: 54px; --slot-h: 66px; --slot-fs: 28px; --slot-r: 12px; }
+  .slots[data-count="5"] { --slot-w: 48px; --slot-h: 58px; --slot-fs: 26px; --slot-r: 11px; }
   .slots.shake { animation: shake 0.5s; }
   @keyframes shake {
     0%,100% { transform: translateX(0); }
@@ -611,13 +541,12 @@
     box-shadow: 0 2px 4px rgba(26,29,46,0.04);
   }
   .keys button:hover { background: #f7f8fb; transform: translateY(-1px); }
-  .keys button:active { transform: translateY(1px); }
   .keys .key-del { background: #fef2f2; border-color: #fecaca; color: #ef4444; }
   .keys .key-del:hover { background: #fee2e2; }
   .keys .key-ok { background: #ecfdf5; border-color: #a7f3d0; color: #10b981; }
   .keys .key-ok:hover { background: #d1fae5; }
 
-  /* Overlays */
+  /* ===== OVERLAYS ===== */
   .overlay {
     position: fixed; inset: 0;
     display: flex; align-items: center; justify-content: center;
@@ -638,15 +567,14 @@
   .overlay.show .overlay-card { transform: scale(1); }
   .overlay-icon {
     font-size: 76px; margin-bottom: 14px;
-    filter: drop-shadow(0 8px 24px rgba(251,191,36,0.4));
     animation: bounceIn 0.6s;
   }
+  .overlay-icon img { width: 110px; height: 110px; object-fit: contain; }
   @keyframes bounceIn {
     0% { transform: scale(0); }
     60% { transform: scale(1.15); }
     100% { transform: scale(1); }
   }
-  .overlay-icon img { width: 110px; height: 110px; object-fit: contain; }
   .overlay-title { font-size: 26px; font-weight: 800; color: #1a1d2e; margin-bottom: 6px; letter-spacing: -0.5px; }
   .overlay-sub { color: #6b7280; font-size: 15px; margin-bottom: 22px; line-height: 1.5; }
   .overlay-sub b { color: #6366f1; }
@@ -661,7 +589,7 @@
     100% { opacity: 0; transform: translateY(105vh) translateX(var(--x,0)) rotate(720deg); }
   }
 
-  /* Player List Modal */
+  /* Player modal */
   .player-modal-overlay {
     position: fixed; inset: 0;
     background: rgba(26,29,46,0.5);
@@ -676,7 +604,6 @@
     background: #fff; border-radius: 20px;
     max-width: 440px; width: 92%;
     max-height: 82vh; overflow-y: auto;
-    box-shadow: 0 30px 80px rgba(26,29,46,0.2);
     transform: scale(0.9);
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -693,39 +620,30 @@
   .player-modal-close {
     background: none; border: none;
     font-size: 18px; cursor: pointer;
-    color: #6b7280;
-    padding: 4px 8px; border-radius: 6px;
-    transition: all 0.15s;
+    color: #6b7280; padding: 4px 8px; border-radius: 6px;
   }
-  .player-modal-close:hover { background: #f3f4f8; color: #1a1d2e; }
   .player-modal-body { padding: 14px; }
   .modal-section { margin-bottom: 16px; }
   .modal-section:last-child { margin-bottom: 0; }
   .modal-section-title {
     font-size: 11px; font-weight: 700;
     color: #6b7280; text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
+    letter-spacing: 1px; margin-bottom: 8px;
     display: flex; justify-content: space-between;
     padding: 0 4px;
   }
   .modal-section-title.failed-title { color: #b91c1c; }
   .modal-section-title.winners-title { color: #059669; }
-
   .modal-player {
     display: flex; align-items: center; gap: 10px;
-    padding: 10px 12px;
-    border-radius: 9px;
-    margin-bottom: 4px;
-    background: #fafbfd;
+    padding: 10px 12px; border-radius: 9px;
+    margin-bottom: 4px; background: #fafbfd;
     font-size: 13px; font-weight: 600;
   }
   .modal-player .avatar {
     width: 26px; height: 26px; border-radius: 7px;
-    background: #eef0ff; color: #6366f1;
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; font-weight: 800;
-    flex-shrink: 0;
   }
   .modal-player .name { flex: 1; }
   .modal-player .status-tag {
@@ -741,13 +659,8 @@
   .modal-player.active { background: #eef0ff; color: #4338ca; }
   .modal-player.active .avatar { background: #6366f1; color: #fff; }
   .modal-player.active .status-tag { background: #c7d2fe; color: #4338ca; }
-  .modal-player .prize-tag { font-size: 15px; display: flex; align-items: center; }
-  .modal-player .prize-tag img {
-    width: 20px; height: 20px;
-    object-fit: contain;
-    vertical-align: middle;
-    display: block;
-  }
+  .modal-player .prize-tag { display: flex; align-items: center; }
+  .modal-player .prize-tag img { width: 20px; height: 20px; object-fit: contain; display: block; }
 
   /* State visibility */
   #playBtn, #pickBtn, .rolling-area, .picked-actions, .input-area, .problems-card {
@@ -761,56 +674,30 @@
   body[data-state="INPUT"] .input-area { display: flex; }
   body[data-state="VIEWING"] .problems-card { display: block; }
 
-  /* Compact INPUT state */
-  body[data-state="INPUT"] .scene {
-    height: 0; margin-bottom: 0;
-    opacity: 0; overflow: hidden;
-    transition: height 0.2s ease, opacity 0.15s ease, margin-bottom 0.2s ease;
-  }
-  body[data-state="INPUT"] main { padding: 12px 20px; }
-  body[data-state="INPUT"] .status-pill {
-    margin-bottom: 10px; padding: 7px 16px; font-size: 12px;
-  }
-  body[data-state="INPUT"] .input-area { gap: 8px; }
-  body[data-state="INPUT"] .slot { height: 50px; width: 44px; font-size: 22px; }
-  body[data-state="INPUT"] .slots { gap: 6px; }
-  body[data-state="INPUT"] .keys { gap: 6px; }
-  body[data-state="INPUT"] .keys button { height: 46px; font-size: 18px; }
-  body[data-state="INPUT"] .problem-label { width: 44px; font-size: 11px; }
-  body[data-state="INPUT"] .heart { font-size: 15px; }
-  body[data-state="INPUT"] .attempts { font-size: 11px; }
-
   /* Responsive */
   @media (max-width: 900px) {
-    #gameScreen {
-      grid-template-columns: 1fr;
-      grid-template-rows: 56px 1fr;
-      grid-template-areas: "header" "main";
-    }
+    #gameScreen { grid-template-columns: 1fr; grid-template-rows: 56px 1fr; grid-template-areas: "header" "main"; }
     .failed-panel, .winners-panel { display: none; }
     .mobile-badge { display: flex; }
     .logo h1 { display: none; }
-    .header-stats { gap: 8px; }
+    .stat.round-stat, .stat.prizes-stat { display: flex; }
     .stat { display: none; }
-    .stat.round-stat { display: flex; }
-    .stat.prizes-stat { display: flex; }
     .setup-grid { grid-template-columns: 1fr; gap: 16px; }
     .setup-card { padding: 20px; }
     main { padding: 16px 12px; }
+    .scene { max-width: 280px; margin-bottom: 12px; }
     .btn-lg { min-width: 200px; font-size: 15px; padding: 13px 24px; }
     .rolling-name { font-size: 28px; min-height: 40px; }
     .keys { grid-template-columns: repeat(3, 62px); }
     .keys button { height: 46px; font-size: 18px; }
-    .slot { width: 42px; height: 52px; font-size: 22px; }
-    .problem-label { width: 42px; font-size: 11px; }
-    .scene { height: 260px; max-width: 320px; margin-bottom: 12px; }
-	.chest { width: 200px; height: 200px; }
-	.chest-video { width: 220px; height: 220px; }
+    .slots[data-count="2"] { --slot-w: 64px; --slot-h: 76px; --slot-fs: 36px; }
+    .slots[data-count="3"] { --slot-w: 56px; --slot-h: 68px; --slot-fs: 30px; }
+    .slots[data-count="4"] { --slot-w: 48px; --slot-h: 58px; --slot-fs: 26px; }
+    .slots[data-count="5"] { --slot-w: 42px; --slot-h: 52px; --slot-fs: 22px; }
     .problems-grid { grid-template-columns: repeat(3, 1fr); }
     .problems-card { padding: 20px 18px; }
     body[data-state="INPUT"] main { padding: 8px 14px; }
     body[data-state="INPUT"] .keys button { height: 42px; font-size: 17px; }
-    body[data-state="INPUT"] .slot { height: 46px; width: 40px; font-size: 20px; }
     body[data-state="INPUT"] .status-pill { margin-bottom: 8px; padding: 5px 12px; }
   }
 </style>
@@ -874,6 +761,15 @@
             <button data-value="3">3×</button>
           </div>
         </div>
+			   <div class="setting-group" id="digitCountSetting">
+		  <label>Digits (audio mode)</label>
+		  <div class="segmented" data-setting="digitCount">
+			<button data-value="2">2</button>
+			<button data-value="3" class="active">3</button>
+			<button data-value="4">4</button>
+			<button data-value="5">5</button>
+		  </div>
+		</div>
         <div class="setting-group">
           <label>Difficulty</label>
           <div class="segmented" data-setting="difficulty">
@@ -910,7 +806,7 @@
         <div class="stat-label">Prizes</div>
         <div class="stat-value" id="prizesLeft">14</div>
       </div>
-      <button class="icon-btn" id="playersBtn" title="All players">👥</button>
+      <button class="icon-btn" id="playersBtn" title="Players">👥</button>
       <button class="icon-btn pause-btn" id="pauseBtn" title="Pause">⏸</button>
     </div>
   </header>
@@ -928,10 +824,8 @@
       <div class="chest" id="chest">
         <div class="chest-glow"></div>
         <div class="prize-float" id="prizeFloat"></div>
-        <video class="chest-video chest-video-idle" id="chestIdleVideo"
-               playsinline muted loop preload="auto"></video>
-        <video class="chest-video chest-video-open" id="chestOpenVideo"
-               playsinline muted preload="auto"></video>
+        <video class="chest-video chest-video-idle" id="chestIdleVideo" playsinline muted loop preload="auto"></video>
+        <video class="chest-video chest-video-open" id="chestOpenVideo" playsinline muted preload="auto"></video>
       </div>
     </div>
 
@@ -939,9 +833,7 @@
       <div class="problems-title">Memorize the problems</div>
       <div class="problems-grid" id="problemsGrid"></div>
       <div class="view-timer-container">
-        <div class="view-timer-bar">
-          <div class="view-timer-fill" id="viewTimerFill"></div>
-        </div>
+        <div class="view-timer-bar"><div class="view-timer-fill" id="viewTimerFill"></div></div>
         <div class="view-timer-text" id="viewTimerText">60s</div>
       </div>
     </div>
@@ -974,13 +866,7 @@
         <div class="attempts" id="attempts"></div>
         <div class="slots-container">
           <div class="problem-labels" id="problemLabels"></div>
-          <div class="slots" id="slots">
-            <div class="slot"></div>
-            <div class="slot"></div>
-            <div class="slot"></div>
-            <div class="slot"></div>
-            <div class="slot"></div>
-          </div>
+          <div class="slots" id="slots" data-count="5"></div>
         </div>
         <div class="keys">
           <button data-k="1">1</button>
@@ -1009,7 +895,7 @@
   </aside>
 </div>
 
-<!-- Player list modal -->
+<!-- Player modal -->
 <div class="player-modal-overlay" id="playerModalOverlay">
   <div class="player-modal">
     <div class="player-modal-header">
@@ -1042,7 +928,7 @@
   </div>
 </div>
 
-<!-- Other overlays -->
+<!-- Win overlay -->
 <div class="overlay" id="winOverlay">
   <div class="overlay-card">
     <div class="overlay-icon" id="winIcon"></div>
@@ -1052,6 +938,7 @@
   </div>
 </div>
 
+<!-- Game over overlay -->
 <div class="overlay" id="gameOverOverlay">
   <div class="overlay-card">
     <div class="overlay-icon">🏆</div>
@@ -1061,6 +948,7 @@
   </div>
 </div>
 
+<!-- Pause overlay -->
 <div class="overlay" id="pauseOverlay">
   <div class="overlay-card">
     <div class="overlay-icon">⏸</div>
@@ -1076,6 +964,7 @@
    ============================================================ */
 const CONFIG = {
   FOLDER_AUDIO: 'audio/',
+  FOLDER_SFX: 'sfx/',
   ROLL_DURATION: 2000,
   ROLL_TICK: 80,
   VIEW_DURATION: 60,
@@ -1090,14 +979,29 @@ const CONFIG = {
 const TOTAL_PRIZES = CONFIG.HADIAH_POOL.reduce((s, p) => s + p.jumlah, 0);
 const MAX_PLAYERS = TOTAL_PRIZES;
 
+/* Jeda antar digit (ms) — semakin banyak digit, semakin lama */
+const DIGIT_DELAY = {
+  2: 300,
+  3: 400,
+  4: 500,
+  5: 600,
+};
+
+/* ============================================================
+   SETTINGS
+   ============================================================ */
 const settings = {
   mode: 'audio',
   timer: 60,
   attempts: 3,
   audioPlays: 2,
   difficulty: 'hard',
+  digitCount: 3,
 };
 
+/* ============================================================
+   GAME STATE
+   ============================================================ */
 const game = {
   players: [],
   nomor: '',
@@ -1122,6 +1026,9 @@ const game = {
   onTimerZero: null,
 };
 
+/* ============================================================
+   DOM
+   ============================================================ */
 const $ = id => document.getElementById(id);
 const els = {
   setupScreen: $('setupScreen'),
@@ -1136,6 +1043,8 @@ const els = {
   audioLoadText: $('audioLoadText'),
   audioProgress: $('audioProgress'),
   audioPlaysSetting: $('audioPlaysSetting'),
+  digitCountSetting: $('digitCountSetting'),
+
   roundNum: $('roundNum'),
   prizesLeft: $('prizesLeft'),
   failedList: $('failedList'),
@@ -1147,6 +1056,7 @@ const els = {
   mobileFailedBadge: $('mobileFailedBadge'),
   mobileWinnersBadge: $('mobileWinnersBadge'),
   playersBtn: $('playersBtn'),
+
   chest: $('chest'),
   prizeFloat: $('prizeFloat'),
   chestIdleVideo: $('chestIdleVideo'),
@@ -1154,6 +1064,7 @@ const els = {
   problemsGrid: $('problemsGrid'),
   viewTimerFill: $('viewTimerFill'),
   viewTimerText: $('viewTimerText'),
+
   statusText: $('statusText'),
   statusPill: $('statusPill'),
   playBtn: $('playBtn'),
@@ -1165,16 +1076,19 @@ const els = {
   startTurnBtn: $('startTurnBtn'),
   rollAgainBtn: $('rollAgainBtn'),
   skipBtn: $('skipBtn'),
+
   timerContainer: $('timerContainer'),
   timerFill: $('timerFill'),
   timerText: $('timerText'),
   attempts: $('attempts'),
   slots: $('slots'),
-  slotEls: document.querySelectorAll('.slot'),
+  slotEls: [],
   problemLabels: $('problemLabels'),
+
   pauseBtn: $('pauseBtn'),
   pauseOverlay: $('pauseOverlay'),
   resumeBtn: $('resumeBtn'),
+
   playerModalOverlay: $('playerModalOverlay'),
   closePlayerModal: $('closePlayerModal'),
   modalFailedSection: $('modalFailedSection'),
@@ -1185,6 +1099,7 @@ const els = {
   modalFailedCount: $('modalFailedCount'),
   modalWinnersCount: $('modalWinnersCount'),
   modalAllCount: $('modalAllCount'),
+
   winOverlay: $('winOverlay'),
   winIcon: $('winIcon'),
   winSub: $('winSub'),
@@ -1226,12 +1141,13 @@ function prizeHtml(prize, size = 22) {
    GENERATORS
    ============================================================ */
 function generateNumberAudio() {
+  const len = settings.digitCount || 5;
   if (settings.difficulty === 'hard') {
-    return shuffle([0,1,2,3,4,5,6,7,8,9]).slice(0, 5).join('');
+    return shuffle([0,1,2,3,4,5,6,7,8,9]).slice(0, len).join('');
   }
   for (let tries = 0; tries < 100; tries++) {
     let s = '';
-    for (let i = 0; i < 5; i++) s += Math.floor(Math.random() * 10);
+    for (let i = 0; i < len; i++) s += Math.floor(Math.random() * 10);
     const counts = {};
     let ok = true;
     for (const c of s) {
@@ -1240,7 +1156,7 @@ function generateNumberAudio() {
     }
     if (ok) return s;
   }
-  return shuffle([0,1,2,3,4,5,6,7,8,9]).slice(0, 5).join('');
+  return shuffle([0,1,2,3,4,5,6,7,8,9]).slice(0, len).join('');
 }
 function genAddition() {
   const c = Math.floor(Math.random() * 10);
@@ -1325,10 +1241,11 @@ const AudioManager = {
   },
   async playNumber(num) {
     this.stopAll();
+    const gap = DIGIT_DELAY[num.length] || 600;
     for (const digit of num) {
       if (game.state !== 'PLAYING') return;
       await this.playFile(`${CONFIG.FOLDER_AUDIO}${digit}.mp3`, digit);
-      await delay(280);
+      await delay(gap);
     }
   },
 };
@@ -1454,7 +1371,7 @@ function initChestVideos() {
 }
 
 /* ============================================================
-   SETUP
+   SETUP SCREEN
    ============================================================ */
 function renderSetupList() {
   els.playerList.innerHTML = '';
@@ -1466,8 +1383,7 @@ function renderSetupList() {
   });
   els.playerCountNum.textContent = game.players.length;
   els.startGameBtn.disabled = game.players.length < 1;
-  els.addPlayerBtn.disabled =
-    game.players.length >= MAX_PLAYERS || els.playerNameInput.value.trim() === '';
+  els.addPlayerBtn.disabled = game.players.length >= MAX_PLAYERS || els.playerNameInput.value.trim() === '';
 }
 function addPlayer() {
   const name = els.playerNameInput.value.trim();
@@ -1478,8 +1394,7 @@ function addPlayer() {
   els.playerNameInput.focus();
 }
 els.playerNameInput.addEventListener('input', () => {
-  els.addPlayerBtn.disabled =
-    els.playerNameInput.value.trim() === '' || game.players.length >= MAX_PLAYERS;
+  els.addPlayerBtn.disabled = els.playerNameInput.value.trim() === '' || game.players.length >= MAX_PLAYERS;
 });
 els.playerNameInput.addEventListener('keydown', e => {
   if (e.key === 'Enter') { e.preventDefault(); addPlayer(); }
@@ -1506,6 +1421,7 @@ document.querySelectorAll('.segmented').forEach(seg => {
       if (settingName === 'mode') {
         settings.mode = val;
         els.audioPlaysSetting.classList.toggle('hidden', val === 'math');
+        if (els.digitCountSetting) els.digitCountSetting.classList.toggle('hidden', val === 'math');
       } else if (settingName === 'difficulty') {
         settings.difficulty = val;
       } else if (settingName === 'timer') {
@@ -1514,6 +1430,8 @@ document.querySelectorAll('.segmented').forEach(seg => {
         settings.attempts = +val;
       } else if (settingName === 'audioPlays') {
         settings.audioPlays = +val;
+      } else if (settingName === 'digitCount') {
+        settings.digitCount = +val;
       }
     });
   });
@@ -1584,24 +1502,16 @@ function render() {
 }
 
 function renderPanels() {
-  const failedList = game.players.filter(p => game.failedThisRound.has(p.id))
-    .sort((a, b) => a.displayOrder - b.displayOrder);
+  const failedList = game.players.filter(p => game.failedThisRound.has(p.id)).sort((a, b) => a.displayOrder - b.displayOrder);
   els.failedCount.textContent = failedList.length;
   els.mobileFailedCount.textContent = failedList.length;
-  els.failedList.innerHTML = '';
-  if (failedList.length === 0) {
-    els.failedList.innerHTML = '<div class="panel-empty">No one has failed this round</div>';
-  } else {
-    failedList.forEach(p => {
-      const div = document.createElement('div');
-      div.className = 'panel-player failed-item';
-      div.innerHTML = `
+  els.failedList.innerHTML = failedList.length === 0
+    ? '<div class="panel-empty">No one has failed this round</div>'
+    : failedList.map(p => `
+      <div class="panel-player failed-item">
         <div class="avatar">${p.name.charAt(0).toUpperCase()}</div>
         <div class="name">${escapeHtml(p.name)}</div>
-      `;
-      els.failedList.appendChild(div);
-    });
-  }
+      </div>`).join('');
 
   const winners = [...game.won.keys()]
     .map(id => ({ player: getPlayer(id), data: game.won.get(id) }))
@@ -1609,21 +1519,14 @@ function renderPanels() {
     .sort((a, b) => (a.data.time || 0) - (b.data.time || 0));
   els.winnersCount.textContent = winners.length;
   els.mobileWinnersCount.textContent = winners.length;
-  els.winnersList.innerHTML = '';
-  if (winners.length === 0) {
-    els.winnersList.innerHTML = '<div class="panel-empty">No winners yet</div>';
-  } else {
-    winners.forEach(({ player, data }) => {
-      const div = document.createElement('div');
-      div.className = 'panel-player won-item';
-      div.innerHTML = `
+  els.winnersList.innerHTML = winners.length === 0
+    ? '<div class="panel-empty">No winners yet</div>'
+    : winners.map(({ player, data }) => `
+      <div class="panel-player won-item">
         <div class="avatar">${player.name.charAt(0).toUpperCase()}</div>
         <div class="name">${escapeHtml(player.name)}</div>
         <div class="prize-emoji">${prizeHtml(data.prize)}</div>
-      `;
-      els.winnersList.appendChild(div);
-    });
-  }
+      </div>`).join('');
 }
 
 function renderStatus() {
@@ -1651,18 +1554,16 @@ function renderStatus() {
       text = '🎲 Selecting a player...';
       els.statusPill.classList.add('picking');
       break;
-    case 'PICKED': {
+    case 'PICKED':
       const p = getPlayer(game.pickedStudent);
       text = p ? `${escapeHtml(p.name)} is selected` : 'Player selected';
       els.statusPill.classList.add('picking');
       break;
-    }
-    case 'INPUT': {
-      const p = getPlayer(game.siswaAktif);
-      text = p ? `${escapeHtml(p.name)} — enter the code` : 'Enter the code';
+    case 'INPUT':
+      const p2 = getPlayer(game.siswaAktif);
+      text = p2 ? `${escapeHtml(p2.name)} — enter the code` : 'Enter the code';
       els.statusPill.classList.add('entering');
       break;
-    }
     case 'WIN':
       text = '🎉 Correct!';
       els.statusPill.classList.add('win');
@@ -1672,11 +1573,23 @@ function renderStatus() {
 }
 
 function renderSlots() {
+  const pinLen = game.pin ? game.pin.length : 5;
+  if (els.slots.children.length !== pinLen) {
+    els.slots.innerHTML = '';
+    for (let i = 0; i < pinLen; i++) {
+      const d = document.createElement('div');
+      d.className = 'slot';
+      els.slots.appendChild(d);
+    }
+    els.slotEls = els.slots.querySelectorAll('.slot');
+    els.slots.dataset.count = pinLen;
+  }
   els.slotEls.forEach((el, i) => {
     el.textContent = game.input[i] || '';
     el.classList.toggle('filled', !!game.input[i]);
   });
 }
+
 function renderAttempts() {
   if (game.state !== 'INPUT') { els.attempts.innerHTML = ''; return; }
   const left = settings.attempts - game.percobaan;
@@ -1691,6 +1604,7 @@ function renderAttempts() {
   }
   els.attempts.innerHTML = html;
 }
+
 function renderProblemLabels() {
   if (settings.mode === 'math' && game.problems.length === 5) {
     els.problemLabels.innerHTML = game.problems.map(p =>
@@ -1714,57 +1628,34 @@ function renderPlayerModal() {
 
   els.modalFailedSection.style.display = failedList.length > 0 ? 'block' : 'none';
   els.modalFailedCount.textContent = failedList.length;
-  els.modalFailedList.innerHTML = '';
-  failedList.forEach(p => {
-    const div = document.createElement('div');
-    div.className = 'modal-player failed';
-    div.innerHTML = `
+  els.modalFailedList.innerHTML = failedList.map(p => `
+    <div class="modal-player failed">
       <div class="avatar">${p.name.charAt(0).toUpperCase()}</div>
       <div class="name">${escapeHtml(p.name)}</div>
       <span class="status-tag">Failed</span>
-    `;
-    els.modalFailedList.appendChild(div);
-  });
+    </div>`).join('');
 
   els.modalWinnersSection.style.display = winners.length > 0 ? 'block' : 'none';
   els.modalWinnersCount.textContent = winners.length;
-  els.modalWinnersList.innerHTML = '';
-  winners.forEach(({ player, data }) => {
-    const div = document.createElement('div');
-    div.className = 'modal-player won';
-    div.innerHTML = `
+  els.modalWinnersList.innerHTML = winners.map(({ player, data }) => `
+    <div class="modal-player won">
       <div class="avatar">${player.name.charAt(0).toUpperCase()}</div>
       <div class="name">${escapeHtml(player.name)}</div>
       <span class="prize-tag">${prizeHtml(data.prize, 20)}</span>
-    `;
-    els.modalWinnersList.appendChild(div);
-  });
+    </div>`).join('');
 
   els.modalAllCount.textContent = sorted.length;
-  els.modalAllList.innerHTML = '';
-  sorted.forEach(p => {
-    const div = document.createElement('div');
-    div.className = 'modal-player';
-    let tag = '';
-    if (game.won.has(p.id)) {
-      div.classList.add('won');
-      tag = 'Won';
-    } else if (game.failedThisRound.has(p.id)) {
-      div.classList.add('failed');
-      tag = 'Failed';
-    } else if (game.siswaAktif === p.id || game.pickedStudent === p.id) {
-      div.classList.add('active');
-      tag = 'Active';
-    } else {
-      tag = 'Ready';
-    }
-    div.innerHTML = `
+  els.modalAllList.innerHTML = sorted.map(p => {
+    let tag = 'Ready', cls = '';
+    if (game.won.has(p.id)) { tag = 'Won'; cls = 'won'; }
+    else if (game.failedThisRound.has(p.id)) { tag = 'Failed'; cls = 'failed'; }
+    else if (game.siswaAktif === p.id || game.pickedStudent === p.id) { tag = 'Active'; cls = 'active'; }
+    return `<div class="modal-player ${cls}">
       <div class="avatar">${p.name.charAt(0).toUpperCase()}</div>
       <div class="name">${escapeHtml(p.name)}</div>
       <span class="status-tag">${tag}</span>
-    `;
-    els.modalAllList.appendChild(div);
-  });
+    </div>`;
+  }).join('');
 }
 
 /* ============================================================
@@ -1863,8 +1754,7 @@ function renderProblemsGrid() {
     `<div class="problem-item">
       <div class="num">#${i + 1}</div>
       <div class="expr">${p.a} ${p.op} ${p.b} =</div>
-    </div>`
-  ).join('');
+    </div>`).join('');
 }
 function startViewTimer() {
   if (game.timerInterval) clearInterval(game.timerInterval);
@@ -1933,15 +1823,17 @@ function doStartTurn() {
   setState('INPUT');
   if (settings.timer > 0) updateTimerUI(settings.timer, settings.timer);
 }
+
 function handleKey(k) {
   if (game.state !== 'INPUT') return;
+  const maxLen = game.pin ? game.pin.length : 5;
   if (k === 'del') {
     game.input = game.input.slice(0, -1);
   } else if (k === 'ok') {
-    if (game.input.length === 5) submitPin();
+    if (game.input.length === maxLen) submitPin();
     return;
   } else if (/^[0-9]$/.test(k)) {
-    if (game.input.length < 5) {
+    if (game.input.length < maxLen) {
       if (!game.timerInterval && settings.timer > 0) {
         startTimer(settings.timer, handleTimeout);
       }
@@ -1951,11 +1843,14 @@ function handleKey(k) {
   }
   renderSlots();
 }
+
 async function submitPin() {
-  if (game.state !== 'INPUT' || game.input.length !== 5) return;
+  const pinLen = game.pin ? game.pin.length : 5;
+  if (game.state !== 'INPUT' || game.input.length !== pinLen) return;
   if (game.input === game.pin) await handleCorrect();
   else await handleWrong();
 }
+
 async function handleCorrect() {
   stopTimer();
   AudioManager.stopAll();
@@ -1968,6 +1863,7 @@ async function handleCorrect() {
   await delay(400);
   showPrize(prize, siswaName);
 }
+
 async function handleWrong() {
   game.percobaan++;
   const attemptsLeft = settings.attempts - game.percobaan;
@@ -1988,6 +1884,7 @@ async function handleWrong() {
     backToPick(failedId);
   }
 }
+
 async function handleTimeout() {
   if (game.state !== 'INPUT') return;
   playWrongSound();
@@ -1999,12 +1896,14 @@ async function handleTimeout() {
   await delay(600);
   backToPick(failedId);
 }
+
 function backToPick(failedId) {
   game.rollAgainLeft = 1;
   resetChest();
   if (allEligibleFailed()) { startNewRound(); return; }
   setState('PICK');
 }
+
 function startNewRound() {
   game.ronde++;
   game.failedThisRound.clear();
@@ -2024,6 +1923,7 @@ function startNewRound() {
   }
   setState('READY');
 }
+
 function proceedAfterWin() {
   els.winOverlay.classList.remove('show');
   resetChest();
@@ -2059,6 +1959,7 @@ function resetChest() {
     els.chestIdleVideo.play().catch(() => {});
   }
 }
+
 function showPrize(prize, siswaName) {
   if (prize.img) {
     els.prizeFloat.innerHTML = `<img src="${prize.img}" alt="${prize.label}" onerror="this.replaceWith(document.createTextNode('${prize.emoji}'))">`;
@@ -2080,6 +1981,7 @@ function showPrize(prize, siswaName) {
   }, 100);
   setTimeout(() => els.winOverlay.classList.add('show'), 1900);
 }
+
 function confetti() {
   const colors = ['#6366f1', '#8b5cf6', '#fbbf24', '#10b981', '#ef4444', '#ec4899'];
   for (let i = 0; i < 100; i++) {
@@ -2128,9 +2030,11 @@ els.playAgainBtn.addEventListener('click', () => {
   game.players = [];
   renderSetupList();
 });
+
 document.querySelectorAll('.keys button').forEach(btn => {
   btn.addEventListener('click', () => handleKey(btn.dataset.k));
 });
+
 document.addEventListener('keydown', e => {
   if (game.state !== 'INPUT') return;
   if (/^[0-9]$/.test(e.key)) { e.preventDefault(); handleKey(e.key); }
