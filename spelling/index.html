@@ -27,7 +27,7 @@
     background: linear-gradient(135deg, #f7f8fb 0%, #eef0f7 100%);
   }
   .setup-card {
-    width: 100%; max-width: 880px;
+    width: 100%; max-width: 920px;
     background: #fff; border-radius: 24px;
     padding: 32px;
     box-shadow: 0 20px 60px rgba(26,29,46,0.08);
@@ -72,7 +72,7 @@
   }
   .player-count b { color: #ec4899; }
   #playerList {
-    list-style: none; max-height: 180px; overflow-y: auto;
+    list-style: none; max-height: 160px; overflow-y: auto;
     border: 1px solid #f0f1f5; border-radius: 10px;
     background: #fafbfd; margin-bottom: 10px;
   }
@@ -134,6 +134,155 @@
     box-shadow: 0 8px 24px rgba(236,72,153,0.3);
   }
   .btn-start:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ===== PRIZE SETTINGS ===== */
+  .prize-settings {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f1f5;
+  }
+  #prizeList {
+    display: flex; flex-direction: column;
+    gap: 6px; margin-bottom: 8px;
+    max-height: 220px; overflow-y: auto;
+    padding-right: 4px;
+  }
+  .prize-row {
+    display: grid;
+    grid-template-columns: 52px 1fr 70px 36px;
+    gap: 6px; align-items: center;
+  }
+  .prize-row input {
+    width: 100%; padding: 9px 10px;
+    border: 2px solid #e5e7eb; border-radius: 8px;
+    font-family: inherit; font-size: 13px; color: #1a1d2e; outline: none;
+  }
+  .prize-row input:focus { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.1); }
+  .prize-row .prize-emoji-btn {
+    width: 100%; height: 38px;
+    border: 2px solid #e5e7eb; border-radius: 8px;
+    background: #fff; cursor: pointer;
+    font-size: 20px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .prize-row .prize-emoji-btn:hover {
+    border-color: #ec4899;
+    background: #fce7f3;
+    transform: scale(1.05);
+  }
+  .prize-row input.prize-qty { text-align: center; font-weight: 700; }
+  .prize-row .prize-remove {
+    background: #fef2f2; border: 2px solid #fecaca; color: #ef4444;
+    border-radius: 8px; height: 36px; cursor: pointer;
+    font-size: 14px; font-weight: 700;
+  }
+  .prize-row .prize-remove:hover:not(:disabled) { background: #fee2e2; }
+  .prize-row .prize-remove:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-add-prize {
+    width: 100%;
+    background: #f3f4f8; border: 2px dashed #d1d5db; color: #6b7280;
+    padding: 10px; border-radius: 8px;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .btn-add-prize:hover { border-color: #ec4899; color: #ec4899; background: #fce7f3; }
+  .prize-total {
+    font-size: 12px; color: #6b7280; text-align: center;
+    padding: 10px; background: #f9fafb; border-radius: 8px; font-weight: 600;
+  }
+  .prize-total b { color: #ec4899; font-weight: 800; }
+
+  /* ===== EMOJI PICKER ===== */
+  .emoji-picker-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,29,46,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 150;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+    padding: 20px;
+  }
+  .emoji-picker-overlay.show { opacity: 1; pointer-events: auto; }
+  .emoji-picker {
+    background: #fff; border-radius: 20px;
+    max-width: 520px; width: 100%;
+    max-height: 84vh; overflow-y: auto;
+    box-shadow: 0 30px 80px rgba(26,29,46,0.25);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .emoji-picker-overlay.show .emoji-picker { transform: scale(1); }
+  .emoji-picker-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f1f5;
+    position: sticky; top: 0; background: #fff;
+    z-index: 2; border-radius: 20px 20px 0 0;
+  }
+  .emoji-picker-header h3 { font-size: 16px; font-weight: 800; }
+  .emoji-picker-close {
+    background: none; border: none;
+    font-size: 18px; cursor: pointer;
+    color: #6b7280; padding: 4px 8px; border-radius: 6px;
+  }
+  .emoji-picker-close:hover { background: #f3f4f8; color: #1a1d2e; }
+  .emoji-picker-body { padding: 16px 20px; }
+  .emoji-custom-row {
+    display: flex; gap: 8px;
+    margin-bottom: 20px;
+  }
+  .emoji-custom-row input {
+    flex: 1; padding: 10px 14px;
+    border: 2px solid #e5e7eb; border-radius: 10px;
+    font-family: inherit; font-size: 15px; outline: none;
+    color: #1a1d2e;
+  }
+  .emoji-custom-row input:focus { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.1); }
+  .emoji-custom-row .custom-preview {
+    width: 52px; height: 44px;
+    border: 2px solid #e5e7eb; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; background: #fafbfd;
+  }
+  .emoji-custom-row button {
+    padding: 10px 20px;
+    background: #ec4899; color: #fff;
+    border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+  }
+  .emoji-custom-row button:hover { background: #db2777; }
+  .emoji-category { margin-bottom: 16px; }
+  .emoji-category-title {
+    font-size: 11px; font-weight: 700;
+    color: #6b7280; text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 4px;
+  }
+  .emoji-grid button {
+    aspect-ratio: 1 / 1;
+    border: 2px solid transparent;
+    background: #fafbfd;
+    border-radius: 8px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.1s;
+    padding: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .emoji-grid button:hover {
+    background: #fce7f3;
+    border-color: #ec4899;
+    transform: scale(1.15);
+  }
 
   /* ===== GAME ===== */
   #gameScreen {
@@ -221,7 +370,7 @@
     flex-shrink: 0;
   }
   .panel-player .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .panel-player .prize-emoji img { width: 22px; height: 22px; object-fit: contain; display: block; }
+  .panel-player .prize-emoji { display: flex; align-items: center; font-size: 16px; }
   .panel-player.failed-item { background: #fef2f2; color: #b91c1c; }
   .panel-player.failed-item .avatar { background: #ef4444; color: #fff; }
   .panel-player.won-item { background: #ecfdf5; color: #059669; }
@@ -313,7 +462,7 @@
   }
   @keyframes dotPulse { 50% { opacity: 0.4; transform: scale(0.8); } }
 
-  /* ===== ACTION AREA (READY/PICK/ROLLING/PICKED) ===== */
+  /* ===== ACTION AREA ===== */
   .action-area {
     display: none;
     flex-direction: column;
@@ -345,6 +494,12 @@
   .btn-ghost:hover:not(:disabled) { background: #f9fafb; }
   .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
   .btn-lg { font-size: 16px; padding: 15px 32px; min-width: 260px; }
+  .btn-primary .countdown {
+    background: rgba(255,255,255,0.25);
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+  }
 
   .rolling-area {
     display: none; flex-direction: column; align-items: center;
@@ -471,7 +626,6 @@
     font-size: 18px;
   }
   .letters-grid button.key-ok:hover { background: #d1fae5; }
-  .letters-grid button.key-ok:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .input-footer {
     display: flex; align-items: center; gap: 16px;
@@ -520,7 +674,6 @@
     font-size: 76px; margin-bottom: 14px;
     animation: bounceIn 0.6s;
   }
-  .overlay-icon img { width: 110px; height: 110px; object-fit: contain; }
   @keyframes bounceIn {
     0% { transform: scale(0); }
     60% { transform: scale(1.15); }
@@ -545,14 +698,13 @@
   .btn-action {
     padding: 14px 32px; border-radius: 14px; border: none;
     font-size: 15px; font-weight: 800;
-    cursor: pointer; transition: all 0.2s;
+    cursor: pointer;
   }
   .btn-action.primary {
     background: linear-gradient(135deg, #ec4899, #f43f5e);
     color: #fff;
     box-shadow: 0 8px 24px rgba(236,72,153,0.3);
   }
-  .btn-action.primary:hover { transform: translateY(-2px); }
 
   /* ===== CONFETTI ===== */
   .confetti {
@@ -565,7 +717,7 @@
     100% { opacity: 0; transform: translateY(105vh) translateX(var(--x,0)) rotate(720deg); }
   }
 
-  /* ===== PLAYER MODAL ===== */
+  /* Player modal */
   .player-modal-overlay {
     position: fixed; inset: 0;
     background: rgba(26,29,46,0.5);
@@ -635,16 +787,17 @@
   .modal-player.active { background: #fce7f3; color: #be185d; }
   .modal-player.active .avatar { background: #ec4899; color: #fff; }
   .modal-player.active .status-tag { background: #fbcfe8; color: #be185d; }
-  .modal-player .prize-tag img { width: 20px; height: 20px; object-fit: contain; display: block; }
+  .modal-player .prize-tag { display: flex; align-items: center; font-size: 16px; }
 
-  /* ===== STATE VISIBILITY ===== */
-  #playBtn, #pickBtn, .picked-actions {
+  /* State visibility */
+  #showBtn, #pickBtn, .picked-actions {
     display: none;
   }
-  body[data-state="READY"] #playBtn { display: inline-flex; }
+  body[data-state="READY"] #showBtn { display: inline-flex; }
   body[data-state="PICK"] #pickBtn { display: inline-flex; }
+  body[data-state="PICKED"] .picked-actions { display: flex; }
 
-  /* ===== RESPONSIVE ===== */
+  /* Responsive */
   @media (max-width: 900px) {
     #gameScreen { grid-template-columns: 1fr; grid-template-rows: 56px 1fr; grid-template-areas: "header" "main"; }
     .failed-panel, .winners-panel { display: none; }
@@ -666,6 +819,11 @@
     .slots[data-len="7"] { --slot-w: 38px; --slot-h: 48px; --slot-fs: 20px; }
     .slots[data-len="8"] { --slot-w: 34px; --slot-h: 44px; --slot-fs: 18px; }
     .word-text { font-size: clamp(48px, 16vw, 80px); }
+    .prize-row { grid-template-columns: 44px 1fr 60px 32px; gap: 4px; }
+    .prize-row input { padding: 7px 8px; font-size: 12px; }
+    .emoji-grid { grid-template-columns: repeat(6, 1fr); }
+    .emoji-grid button { font-size: 20px; }
+    .emoji-picker-body { padding: 14px; }
   }
 </style>
 </head>
@@ -704,6 +862,16 @@
           </div>
         </div>
         <div class="setting-group">
+          <label>Show Word Times (blinks)</label>
+          <div class="segmented" data-setting="showTimes">
+            <button data-value="1">1×</button>
+            <button data-value="2">2×</button>
+            <button data-value="3" class="active">3×</button>
+            <button data-value="4">4×</button>
+            <button data-value="5">5×</button>
+          </div>
+        </div>
+        <div class="setting-group">
           <label>Difficulty</label>
           <div class="segmented" data-setting="difficulty">
             <button data-value="easy">Easy (3-4)</button>
@@ -728,6 +896,15 @@
             <button data-value="3" class="active">3</button>
             <button data-value="5">5</button>
           </div>
+        </div>
+      </div>
+
+      <div class="setup-col prize-settings">
+        <h2 class="section-title">Prizes & Quantities</h2>
+        <div id="prizeList"></div>
+        <button id="addPrizeBtn" class="btn-add-prize">+ Add Prize</button>
+        <div class="prize-total" id="prizeTotal">
+          Total: <b id="prizeTotalNum">14</b> prizes → max <b id="prizeMaxPlayers">14</b> players
         </div>
       </div>
     </div>
@@ -783,7 +960,10 @@
         <span id="statusText">Press Show Word to begin</span>
       </div>
 
-      <button id="playBtn" class="btn btn-primary btn-lg">🔊 Show Word</button>
+      <button id="showBtn" class="btn btn-primary btn-lg">
+        🔊 Show Word
+        <span class="countdown" id="showCount">3×</span>
+      </button>
       <button id="pickBtn" class="btn btn-primary btn-lg">🎲 Pick Random Student</button>
 
       <div class="rolling-area">
@@ -820,6 +1000,24 @@
     </div>
     <div id="winnersList"></div>
   </aside>
+</div>
+
+<!-- EMOJI PICKER MODAL -->
+<div class="emoji-picker-overlay" id="emojiPickerOverlay">
+  <div class="emoji-picker">
+    <div class="emoji-picker-header">
+      <h3>🎨 Pick an emoji</h3>
+      <button class="emoji-picker-close" id="closeEmojiPicker">✕</button>
+    </div>
+    <div class="emoji-picker-body">
+      <div class="emoji-custom-row">
+        <div class="custom-preview" id="customPreview">🎁</div>
+        <input id="customEmojiInput" type="text" placeholder="Type or paste any emoji..." maxlength="8">
+        <button id="useCustomEmoji">Use</button>
+      </div>
+      <div id="emojiCategories"></div>
+    </div>
+  </div>
 </div>
 
 <!-- Player modal -->
@@ -919,26 +1117,80 @@ const CONFIG = {
   FOLDER_AUDIO: 'audio/',
   ROLL_DURATION: 2000,
   ROLL_TICK: 80,
-  BLINK_COUNT: 4,
   BLINK_MIN_SHOW: 700,
   BLINK_GAP: 300,
-  HADIAH_POOL: [
-    { id: 'pensil',    label: 'Pencil', emoji: '✏️', img: 'images/pensil.png',    jumlah: 7 },
-    { id: 'penghapus', label: 'Eraser', emoji: '🧽', img: 'images/penghapus.png', jumlah: 7 },
-  ],
 };
-const TOTAL_PRIZES = CONFIG.HADIAH_POOL.reduce((s, p) => s + p.jumlah, 0);
-const MAX_PLAYERS = TOTAL_PRIZES;
 
 /* ============================================================
-   SETTINGS
+   EMOJI CATEGORIES
    ============================================================ */
+const EMOJI_CATEGORIES = [
+  {
+    name: 'Stationery',
+    emojis: ['✏️','🖊️','🖍️','🖌️','📏','📐','📎','📌','📍','🔖','📓','📔','📕','📗','📘','📙','📒','📚','📖','📝','✂️','📋','🗂️','🗃️','🗄️','📁','📂']
+  },
+  {
+    name: 'Food',
+    emojis: ['🍪','🍫','🍬','🍭','🍩','🧁','🍰','🎂','🍿','🥨','🍡','🍢','🧃','🥤','🍎','🍊','🍇','🍓','🍉','🍌','🍒','🍑','🍍','🥝','🍦','🍧','🍨']
+  },
+  {
+    name: 'Toys',
+    emojis: ['🎁','🧸','🪀','🎈','🎨','🎭','🎪','🎯','🎲','🧩','🎮','🎰','🪁','🎺','🎷','🎸','🥁','🎹','🎵','🎶','⚽','🏀','🎾','🏐','🏈','⚾','🎳','🏓']
+  },
+  {
+    name: 'Rewards',
+    emojis: ['⭐','🌟','💫','✨','💎','🏆','🏅','🎖️','👑','🥇','🥈','🥉','🎗️','🔔','🎀','🌺','🌸','🌼','🌻','🌈','☀️','🌙','💖','💝','🎊','🎉','💐']
+  },
+  {
+    name: 'Snacks',
+    emojis: ['🥐','🥖','🥯','🧇','🥞','🍔','🌭','🍟','🍕','🥪','🌮','🌯','🥙','🍗','🍖','🍤','🍣','🍱','🍚','🍛','🍜','🍝','🥘','🍲']
+  },
+  {
+    name: 'Fruits',
+    emojis: ['🍏','🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥕','🌽','🌶️','🥒','🥬']
+  },
+];
+
+/* ============================================================
+   SETTINGS + PRIZES
+   ============================================================ */
+const DEFAULT_PRIZES = [
+  { id: 'pensil',    label: 'Pencil', emoji: '✏️', jumlah: 7 },
+  { id: 'penghapus', label: 'Eraser', emoji: '🧽', jumlah: 7 },
+];
+const STORAGE_KEY = 'spelling_prizes_v2';
+
 const settings = {
   category: 'numbers',
+  showTimes: 3,
   difficulty: 'medium',
   timer: 60,
   attempts: 3,
+  prizes: JSON.parse(JSON.stringify(DEFAULT_PRIZES)),
 };
+
+(function loadPrizes() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        settings.prizes = parsed.map(p => ({
+          id: p.id || 'prize',
+          label: p.label || 'Prize',
+          emoji: p.emoji || '🎁',
+          jumlah: Math.max(1, parseInt(p.jumlah) || 1),
+        }));
+      }
+    }
+  } catch (e) {}
+})();
+
+function savePrizes() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(settings.prizes)); } catch (e) {}
+}
+function getTotalPrizes() { return settings.prizes.reduce((s, p) => s + (parseInt(p.jumlah) || 0), 0); }
+function getMaxPlayers() { return getTotalPrizes(); }
 
 /* ============================================================
    GAME STATE
@@ -972,72 +1224,49 @@ const game = {
    ============================================================ */
 const $ = id => document.getElementById(id);
 const els = {
-  setupScreen: $('setupScreen'),
-  gameScreen: $('gameScreen'),
-  playerNameInput: $('playerNameInput'),
-  addPlayerBtn: $('addPlayerBtn'),
-  playerList: $('playerList'),
-  playerCountNum: $('playerCountNum'),
-  maxPlayersNum: $('maxPlayersNum'),
-  fillDemoBtn: $('fillDemoBtn'),
+  setupScreen: $('setupScreen'), gameScreen: $('gameScreen'),
+  playerNameInput: $('playerNameInput'), addPlayerBtn: $('addPlayerBtn'),
+  playerList: $('playerList'), playerCountNum: $('playerCountNum'),
+  maxPlayersNum: $('maxPlayersNum'), fillDemoBtn: $('fillDemoBtn'),
   startGameBtn: $('startGameBtn'),
 
-  roundNum: $('roundNum'),
-  prizesLeft: $('prizesLeft'),
-  failedList: $('failedList'),
-  winnersList: $('winnersList'),
-  failedCount: $('failedCount'),
-  winnersCount: $('winnersCount'),
-  mobileFailedCount: $('mobileFailedCount'),
-  mobileWinnersCount: $('mobileWinnersCount'),
-  mobileFailedBadge: $('mobileFailedBadge'),
-  mobileWinnersBadge: $('mobileWinnersBadge'),
+  prizeList: $('prizeList'), addPrizeBtn: $('addPrizeBtn'),
+  prizeTotalNum: $('prizeTotalNum'), prizeMaxPlayers: $('prizeMaxPlayers'),
+
+  emojiPickerOverlay: $('emojiPickerOverlay'),
+  closeEmojiPicker: $('closeEmojiPicker'),
+  customEmojiInput: $('customEmojiInput'),
+  useCustomEmoji: $('useCustomEmoji'),
+  customPreview: $('customPreview'),
+  emojiCategories: $('emojiCategories'),
+
+  roundNum: $('roundNum'), prizesLeft: $('prizesLeft'),
+  failedList: $('failedList'), winnersList: $('winnersList'),
+  failedCount: $('failedCount'), winnersCount: $('winnersCount'),
+  mobileFailedCount: $('mobileFailedCount'), mobileWinnersCount: $('mobileWinnersCount'),
+  mobileFailedBadge: $('mobileFailedBadge'), mobileWinnersBadge: $('mobileWinnersBadge'),
   playersBtn: $('playersBtn'),
 
-  wordDisplay: $('wordDisplay'),
-  wordText: $('wordText'),
-  wordProgress: $('wordProgress'),
+  wordDisplay: $('wordDisplay'), wordText: $('wordText'), wordProgress: $('wordProgress'),
+  statusPill: $('statusPill'), statusText: $('statusText'),
+  showBtn: $('showBtn'), showCount: $('showCount'), pickBtn: $('pickBtn'),
+  rollingName: $('rollingName'), rollCount: $('rollCount'),
+  startTurnBtn: $('startTurnBtn'), rollAgainBtn: $('rollAgainBtn'), skipBtn: $('skipBtn'),
 
-  statusPill: $('statusPill'),
-  statusText: $('statusText'),
-  playBtn: $('playBtn'),
-  pickBtn: $('pickBtn'),
-  rollingName: $('rollingName'),
-  rollCount: $('rollCount'),
-  startTurnBtn: $('startTurnBtn'),
-  rollAgainBtn: $('rollAgainBtn'),
-  skipBtn: $('skipBtn'),
+  inputTitle: $('inputTitle'), slots: $('slots'), lettersGrid: $('lettersGrid'),
+  hearts: $('hearts'), timerText: $('timerText'),
 
-  inputTitle: $('inputTitle'),
-  slots: $('slots'),
-  lettersGrid: $('lettersGrid'),
-  hearts: $('hearts'),
-  timerText: $('timerText'),
+  pauseBtn: $('pauseBtn'), pauseOverlay: $('pauseOverlay'), resumeBtn: $('resumeBtn'),
+  playerModalOverlay: $('playerModalOverlay'), closePlayerModal: $('closePlayerModal'),
+  modalFailedSection: $('modalFailedSection'), modalWinnersSection: $('modalWinnersSection'),
+  modalFailedList: $('modalFailedList'), modalWinnersList: $('modalWinnersList'),
+  modalAllList: $('modalAllList'), modalFailedCount: $('modalFailedCount'),
+  modalWinnersCount: $('modalWinnersCount'), modalAllCount: $('modalAllCount'),
 
-  pauseBtn: $('pauseBtn'),
-  pauseOverlay: $('pauseOverlay'),
-  resumeBtn: $('resumeBtn'),
-
-  playerModalOverlay: $('playerModalOverlay'),
-  closePlayerModal: $('closePlayerModal'),
-  modalFailedSection: $('modalFailedSection'),
-  modalWinnersSection: $('modalWinnersSection'),
-  modalFailedList: $('modalFailedList'),
-  modalWinnersList: $('modalWinnersList'),
-  modalAllList: $('modalAllList'),
-  modalFailedCount: $('modalFailedCount'),
-  modalWinnersCount: $('modalWinnersCount'),
-  modalAllCount: $('modalAllCount'),
-
-  winOverlay: $('winOverlay'),
-  winIcon: $('winIcon'),
-  winSub: $('winSub'),
-  winWord: $('winWord'),
-  nextRoundBtn: $('nextRoundBtn'),
-  gameOverOverlay: $('gameOverOverlay'),
-  playAgainBtn: $('playAgainBtn'),
+  winOverlay: $('winOverlay'), winIcon: $('winIcon'), winSub: $('winSub'),
+  winWord: $('winWord'), nextRoundBtn: $('nextRoundBtn'),
+  gameOverOverlay: $('gameOverOverlay'), playAgainBtn: $('playAgainBtn'),
 };
-els.maxPlayersNum.textContent = MAX_PLAYERS;
 
 /* ============================================================
    UTIL
@@ -1061,21 +1290,154 @@ function allEligibleFailed() {
   return game.players.every(p => game.won.has(p.id) || game.failedThisRound.has(p.id));
 }
 function prizeHtml(prize, size = 22) {
-  if (prize.img) {
-    return `<img src="${prize.img}" alt="${prize.label}" style="width:${size}px;height:${size}px;object-fit:contain;vertical-align:middle;display:inline-block;" onerror="this.replaceWith(document.createTextNode('${prize.emoji}'))">`;
-  }
-  return prize.emoji;
+  return `<span style="font-size:${size}px;line-height:1;display:inline-block;">${prize.emoji || '🎁'}</span>`;
 }
 
 /* ============================================================
-   GENERATORS
+   EMOJI PICKER
+   ============================================================ */
+let currentEmojiTargetIdx = null;
+
+function openEmojiPicker(idx) {
+  currentEmojiTargetIdx = idx;
+  els.customEmojiInput.value = '';
+  els.customPreview.textContent = '🎁';
+  renderEmojiCategories();
+  els.emojiPickerOverlay.classList.add('show');
+  setTimeout(() => els.customEmojiInput.focus(), 100);
+}
+
+function closeEmojiPicker() {
+  currentEmojiTargetIdx = null;
+  els.emojiPickerOverlay.classList.remove('show');
+}
+
+function renderEmojiCategories() {
+  els.emojiCategories.innerHTML = '';
+  EMOJI_CATEGORIES.forEach(cat => {
+    const div = document.createElement('div');
+    div.className = 'emoji-category';
+    div.innerHTML = `
+      <div class="emoji-category-title">${cat.name}</div>
+      <div class="emoji-grid">
+        ${cat.emojis.map(e => `<button data-emoji="${e}">${e}</button>`).join('')}
+      </div>
+    `;
+    div.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => selectEmoji(btn.dataset.emoji));
+    });
+    els.emojiCategories.appendChild(div);
+  });
+}
+
+function selectEmoji(emoji) {
+  if (currentEmojiTargetIdx === null) return;
+  if (!settings.prizes[currentEmojiTargetIdx]) return;
+  settings.prizes[currentEmojiTargetIdx].emoji = emoji;
+  savePrizes();
+  renderPrizeList();
+  closeEmojiPicker();
+}
+
+els.customEmojiInput.addEventListener('input', () => {
+  const val = els.customEmojiInput.value.trim();
+  els.customPreview.textContent = val || '🎁';
+});
+els.customEmojiInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const val = els.customEmojiInput.value.trim();
+    if (val) selectEmoji(val);
+  }
+});
+els.useCustomEmoji.addEventListener('click', () => {
+  const val = els.customEmojiInput.value.trim();
+  if (val) selectEmoji(val);
+});
+els.closeEmojiPicker.addEventListener('click', closeEmojiPicker);
+els.emojiPickerOverlay.addEventListener('click', (e) => {
+  if (e.target === els.emojiPickerOverlay) closeEmojiPicker();
+});
+
+/* ============================================================
+   PRIZE UI
+   ============================================================ */
+function renderPrizeList() {
+  els.prizeList.innerHTML = '';
+  settings.prizes.forEach((p, idx) => {
+    const row = document.createElement('div');
+    row.className = 'prize-row';
+    row.innerHTML = `
+      <button class="prize-emoji-btn" data-idx="${idx}" title="Pick emoji">${escapeHtml(p.emoji)}</button>
+      <input class="prize-name" data-idx="${idx}" data-field="label" value="${escapeHtml(p.label)}" maxlength="20" placeholder="Prize name">
+      <input class="prize-qty" data-idx="${idx}" data-field="jumlah" type="number" min="1" max="99" value="${p.jumlah}">
+      <button class="prize-remove" data-idx="${idx}" ${settings.prizes.length <= 1 ? 'disabled' : ''}>✕</button>
+    `;
+    els.prizeList.appendChild(row);
+  });
+
+  els.prizeList.querySelectorAll('.prize-emoji-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      openEmojiPicker(parseInt(e.currentTarget.dataset.idx));
+    });
+  });
+  els.prizeList.querySelectorAll('input').forEach(i => i.addEventListener('input', handlePrizeInput));
+  els.prizeList.querySelectorAll('.prize-remove').forEach(b => b.addEventListener('click', handlePrizeRemove));
+  updatePrizeTotals();
+}
+function handlePrizeInput(e) {
+  const input = e.target;
+  const idx = parseInt(input.dataset.idx);
+  const field = input.dataset.field;
+  if (isNaN(idx) || !settings.prizes[idx]) return;
+  if (field === 'jumlah') {
+    let v = parseInt(input.value);
+    if (isNaN(v) || v < 1) v = 1;
+    if (v > 99) v = 99;
+    settings.prizes[idx].jumlah = v;
+  } else {
+    settings.prizes[idx].label = input.value;
+  }
+  updatePrizeTotals();
+}
+function handlePrizeRemove(e) {
+  if (settings.prizes.length <= 1) return;
+  const idx = parseInt(e.currentTarget.dataset.idx);
+  if (isNaN(idx)) return;
+  settings.prizes.splice(idx, 1);
+  renderPrizeList();
+  savePrizes();
+}
+function handleAddPrize() {
+  let id = 'prize', n = 1;
+  while (settings.prizes.some(p => p.id === id)) id = 'prize' + (n++);
+  settings.prizes.push({ id, label: 'New Prize', emoji: '🎁', jumlah: 1 });
+  renderPrizeList();
+  savePrizes();
+  if (els.prizeList) els.prizeList.scrollTop = els.prizeList.scrollHeight;
+}
+function updatePrizeTotals() {
+  const total = getTotalPrizes();
+  els.prizeTotalNum.textContent = total;
+  els.prizeMaxPlayers.textContent = total;
+  els.maxPlayersNum.textContent = total;
+  if (game.players.length > total) {
+    game.players = game.players.slice(0, total);
+    renderSetupList();
+  }
+  els.addPlayerBtn.disabled = game.players.length >= total || els.playerNameInput.value.trim() === '';
+  els.startGameBtn.disabled = game.players.length < 1 || total < 1;
+  savePrizes();
+}
+
+/* ============================================================
+   GENERATOR
    ============================================================ */
 function getDifficultyFilter(word) {
   if (settings.difficulty === 'easy') return word.len >= 3 && word.len <= 4;
   if (settings.difficulty === 'medium') return word.len >= 4 && word.len <= 6;
-  return word.len >= 5; // hard
+  return word.len >= 5;
 }
-
 function getWordPool() {
   let pool = [];
   if (settings.category === 'numbers') pool = WORD_POOL.numbers.slice();
@@ -1083,20 +1445,16 @@ function getWordPool() {
   else pool = [...WORD_POOL.numbers, ...WORD_POOL.colors];
   return pool.filter(getDifficultyFilter);
 }
-
 function generateWord() {
   const pool = getWordPool();
-  if (pool.length === 0) {
-    // Fallback
-    return { word: 'satu', len: 4 };
-  }
+  if (pool.length === 0) return { word: 'satu', len: 4 };
   return pool[Math.floor(Math.random() * pool.length)];
 }
-
 function initPrizeStock() {
   const stock = [];
-  for (const p of CONFIG.HADIAH_POOL) {
-    for (let i = 0; i < p.jumlah; i++) stock.push(p);
+  for (const p of settings.prizes) {
+    const qty = parseInt(p.jumlah) || 0;
+    for (let i = 0; i < qty; i++) stock.push({ id: p.id, label: p.label, emoji: p.emoji });
   }
   return shuffle(stock);
 }
@@ -1108,12 +1466,7 @@ const AudioManager = {
   currentAudio: null,
   stopAll() {
     if (this.currentAudio) {
-      try {
-        this.currentAudio.pause();
-        this.currentAudio.currentTime = 0;
-        this.currentAudio.removeAttribute('src');
-        this.currentAudio.load();
-      } catch (e) {}
+      try { this.currentAudio.pause(); this.currentAudio.currentTime = 0; } catch (e) {}
       this.currentAudio = null;
     }
     if (window.speechSynthesis) { try { speechSynthesis.cancel(); } catch (e) {} }
@@ -1128,9 +1481,7 @@ const AudioManager = {
         a.onended = finish;
         a.onerror = () => this.speak(word).then(finish);
         a.play().catch(() => this.speak(word).then(finish));
-      } catch (e) {
-        this.speak(word).then(finish);
-      }
+      } catch (e) { this.speak(word).then(finish); }
       setTimeout(finish, 4000);
     });
   },
@@ -1232,7 +1583,7 @@ function playPrizeSound() {
 }
 
 /* ============================================================
-   SETUP SCREEN
+   SETUP
    ============================================================ */
 function renderSetupList() {
   els.playerList.innerHTML = '';
@@ -1243,19 +1594,20 @@ function renderSetupList() {
     els.playerList.appendChild(li);
   });
   els.playerCountNum.textContent = game.players.length;
-  els.startGameBtn.disabled = game.players.length < 1;
-  els.addPlayerBtn.disabled = game.players.length >= MAX_PLAYERS || els.playerNameInput.value.trim() === '';
+  const total = getTotalPrizes();
+  els.startGameBtn.disabled = game.players.length < 1 || total < 1;
+  els.addPlayerBtn.disabled = game.players.length >= total || els.playerNameInput.value.trim() === '';
 }
 function addPlayer() {
   const name = els.playerNameInput.value.trim();
-  if (!name || game.players.length >= MAX_PLAYERS) return;
+  if (!name || game.players.length >= getTotalPrizes()) return;
   game.players.push({ name });
   els.playerNameInput.value = '';
   renderSetupList();
   els.playerNameInput.focus();
 }
 els.playerNameInput.addEventListener('input', () => {
-  els.addPlayerBtn.disabled = els.playerNameInput.value.trim() === '' || game.players.length >= MAX_PLAYERS;
+  els.addPlayerBtn.disabled = els.playerNameInput.value.trim() === '' || game.players.length >= getTotalPrizes();
 });
 els.playerNameInput.addEventListener('keydown', e => {
   if (e.key === 'Enter') { e.preventDefault(); addPlayer(); }
@@ -1269,9 +1621,11 @@ els.playerList.addEventListener('click', e => {
 });
 els.fillDemoBtn.addEventListener('click', () => {
   const demo = ['Bella','Amelia','Lila','Oshen','Zion','Zoe','Ona','Momo','Moira','Vera','Finn','Matyan','Archer'];
-  game.players = demo.slice(0, MAX_PLAYERS).map(name => ({ name }));
+  game.players = demo.slice(0, getMaxPlayers()).map(name => ({ name }));
   renderSetupList();
 });
+els.addPrizeBtn.addEventListener('click', handleAddPrize);
+
 document.querySelectorAll('.segmented').forEach(seg => {
   const settingName = seg.dataset.setting;
   seg.querySelectorAll('button').forEach(btn => {
@@ -1280,6 +1634,7 @@ document.querySelectorAll('.segmented').forEach(seg => {
       btn.classList.add('active');
       const val = btn.dataset.value;
       if (settingName === 'category') settings.category = val;
+      else if (settingName === 'showTimes') settings.showTimes = +val;
       else if (settingName === 'difficulty') settings.difficulty = val;
       else if (settingName === 'timer') settings.timer = +val;
       else if (settingName === 'attempts') settings.attempts = +val;
@@ -1318,7 +1673,6 @@ function startRound() {
   stopTimer();
   setState('READY');
 }
-
 function setState(s) {
   game.state = s;
   document.body.dataset.state = s;
@@ -1333,6 +1687,8 @@ function render() {
   els.prizesLeft.textContent = game.prizeStock.length;
   els.rollCount.textContent = game.rollAgainLeft;
   els.rollAgainBtn.disabled = game.rollAgainLeft <= 0;
+  if (els.showCount) els.showCount.textContent = `${settings.showTimes}×`;
+
   renderPanels();
   renderStatus();
   renderInput();
@@ -1362,7 +1718,7 @@ function renderPanels() {
       <div class="panel-player won-item">
         <div class="avatar">${player.name.charAt(0).toUpperCase()}</div>
         <div class="name">${escapeHtml(player.name)}</div>
-        <div class="prize-emoji">${prizeHtml(data.prize)}</div>
+        <div class="prize-emoji">${data.prize.emoji}</div>
       </div>`).join('');
 }
 
@@ -1403,7 +1759,6 @@ function renderStatus() {
 function renderInput() {
   const wordLen = game.word.length;
 
-  // Slots
   if (els.slots.dataset.len !== String(wordLen) || els.slots.children.length !== wordLen) {
     els.slots.innerHTML = '';
     for (let i = 0; i < wordLen; i++) {
@@ -1419,7 +1774,6 @@ function renderInput() {
     el.classList.toggle('filled', ch !== '');
   });
 
-  // Letters grid (only render once)
   if (els.lettersGrid.children.length === 0) {
     const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
     let html = letters.map(l => `<button data-k="${l}">${l}</button>`).join('');
@@ -1431,7 +1785,6 @@ function renderInput() {
     });
   }
 
-  // Hearts
   const left = settings.attempts - game.percobaan;
   let heartsHtml = '';
   for (let i = 0; i < settings.attempts; i++) {
@@ -1446,17 +1799,17 @@ function renderInput() {
 }
 
 /* ============================================================
-   VIEWING (BLINK WORD 4 TIMES)
+   VIEWING (BLINK N TIMES — configurable)
    ============================================================ */
-async function showWord() {
+async function showSequence() {
   if (game.state !== 'READY' || game.hasShownThisRound) return;
   game.hasShownThisRound = true;
   setState('VIEWING');
   AudioManager.stopAll();
 
-  // Setup progress dots
+  const blinkCount = settings.showTimes || 3;
   els.wordProgress.innerHTML = '';
-  for (let i = 0; i < CONFIG.BLINK_COUNT; i++) {
+  for (let i = 0; i < blinkCount; i++) {
     const d = document.createElement('div');
     d.className = 'dot';
     els.wordProgress.appendChild(d);
@@ -1465,25 +1818,18 @@ async function showWord() {
 
   els.wordText.textContent = game.word;
 
-  for (let i = 0; i < CONFIG.BLINK_COUNT; i++) {
+  for (let i = 0; i < blinkCount; i++) {
     if (game.state !== 'VIEWING') return;
-
-    // Show word
     els.wordText.classList.add('visible');
     dots[i].classList.add('active');
 
-    // Play audio (async, don't block)
     const audioPromise = AudioManager.playWord(game.word);
-
-    // Wait for min show + audio
     await Promise.all([audioPromise, delay(CONFIG.BLINK_MIN_SHOW)]);
 
-    // Hide word
     els.wordText.classList.remove('visible');
     dots[i].classList.remove('active');
     dots[i].classList.add('done');
 
-    // Gap
     await delay(CONFIG.BLINK_GAP);
   }
 
@@ -1492,7 +1838,7 @@ async function showWord() {
 }
 
 /* ============================================================
-   PICK / ROLLING / START TURN
+   PICK / ROLLING
    ============================================================ */
 async function doPickRandom() {
   if (game.state !== 'PICK') return;
@@ -1538,7 +1884,7 @@ function doStartTurn() {
 }
 
 /* ============================================================
-   INPUT HANDLING
+   INPUT
    ============================================================ */
 function handleKey(k) {
   if (game.state !== 'INPUT') return;
@@ -1557,7 +1903,6 @@ function handleKey(k) {
       }
       playTapSound();
       game.input += k;
-      // Auto-submit when full
       if (game.input.length === maxLen) {
         clearTimeout(game.submitTimeout);
         game.submitTimeout = setTimeout(() => {
@@ -1572,12 +1917,8 @@ function handleKey(k) {
 async function submitWord() {
   if (game.state !== 'INPUT' || game.input.length !== game.word.length) return;
   clearTimeout(game.submitTimeout);
-
-  if (game.input.toLowerCase() === game.word.toLowerCase()) {
-    await handleCorrect();
-  } else {
-    await handleWrong();
-  }
+  if (game.input.toLowerCase() === game.word.toLowerCase()) await handleCorrect();
+  else await handleWrong();
 }
 
 /* ============================================================
@@ -1614,7 +1955,6 @@ async function handleWrong() {
     backToPick();
   }
 }
-
 async function handleTimeout() {
   if (game.state !== 'INPUT') return;
   playWrongSound();
@@ -1625,13 +1965,11 @@ async function handleTimeout() {
   await delay(600);
   backToPick();
 }
-
 function backToPick() {
   game.rollAgainLeft = 1;
   if (allEligibleFailed()) { startNewRound(); return; }
   setState('PICK');
 }
-
 function startNewRound() {
   game.ronde++;
   game.failedThisRound.clear();
@@ -1648,7 +1986,6 @@ function startNewRound() {
   }
   startRound();
 }
-
 function proceedAfterWin() {
   els.winOverlay.classList.remove('show');
   if (game.won.size >= game.players.length || game.prizeStock.length === 0) {
@@ -1722,18 +2059,13 @@ function doResume() {
    WIN SHOW / CONFETTI
    ============================================================ */
 function showWin(prize, siswaName) {
-  if (prize.img) {
-    els.winIcon.innerHTML = `<img src="${prize.img}" alt="${prize.label}" onerror="this.replaceWith(document.createTextNode('${prize.emoji}'))">`;
-  } else {
-    els.winIcon.textContent = prize.emoji;
-  }
-  els.winSub.innerHTML = `<b>${escapeHtml(siswaName)}</b> spelled it right and won a <b>${prize.label}!</b>`;
+  els.winIcon.textContent = prize.emoji;
+  els.winSub.innerHTML = `<b>${escapeHtml(siswaName)}</b> spelled it right and won a <b>${escapeHtml(prize.label)}</b>!`;
   els.winWord.textContent = game.word;
   confetti();
   playPrizeSound();
   setTimeout(() => els.winOverlay.classList.add('show'), 400);
 }
-
 function confetti() {
   const colors = ['#ec4899', '#f43f5e', '#fbbf24', '#10b981', '#3b82f6', '#a855f7'];
   for (let i = 0; i < 100; i++) {
@@ -1774,7 +2106,7 @@ function renderPlayerModal() {
     <div class="modal-player won">
       <div class="avatar">${player.name.charAt(0).toUpperCase()}</div>
       <div class="name">${escapeHtml(player.name)}</div>
-      <span class="prize-tag">${prizeHtml(data.prize, 20)}</span>
+      <span class="prize-tag">${data.prize.emoji}</span>
     </div>`).join('');
 
   els.modalAllCount.textContent = sorted.length;
@@ -1794,7 +2126,7 @@ function renderPlayerModal() {
 /* ============================================================
    EVENTS
    ============================================================ */
-els.playBtn.addEventListener('click', showWord);
+els.showBtn.addEventListener('click', showSequence);
 els.pickBtn.addEventListener('click', doPickRandom);
 els.rollAgainBtn.addEventListener('click', doRollAgain);
 els.skipBtn.addEventListener('click', doSkip);
@@ -1826,7 +2158,6 @@ els.playAgainBtn.addEventListener('click', () => {
   renderSetupList();
 });
 
-// Physical keyboard
 document.addEventListener('keydown', e => {
   if (game.state !== 'INPUT') return;
   if (/^[a-zA-Z]$/.test(e.key)) {
@@ -1845,6 +2176,7 @@ document.addEventListener('keydown', e => {
    INIT
    ============================================================ */
 renderSetupList();
+renderPrizeList();
 </script>
 </body>
 </html>
