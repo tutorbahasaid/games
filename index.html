@@ -71,27 +71,47 @@
   }
   .game-card:hover:not(.disabled) {
     transform: translateY(-4px);
-    border-color: #6366f1;
-    box-shadow: 0 16px 40px rgba(99,102,241,0.18);
   }
   .game-card .icon {
     width: 56px; height: 56px;
     border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
     font-size: 28px;
+  }
+  /* Card themes */
+  .game-card.mystery-box .icon {
     background: linear-gradient(135deg, #eef0ff, #e0e3ff);
     color: #6366f1;
   }
-  .game-card.color-card .icon {
-    background: linear-gradient(135deg, #fef3c7, #fce7f3);
+  .game-card.mystery-box:hover:not(.disabled) {
+    border-color: #6366f1;
+    box-shadow: 0 16px 40px rgba(99,102,241,0.18);
   }
-  .game-card.color-card:hover:not(.disabled) {
+  .game-card.mystery-box .play-btn { color: #6366f1; }
+  .game-card.mystery-box .badge { background: #eef0ff; color: #6366f1; }
+
+  .game-card.color-sequence .icon {
+    background: linear-gradient(135deg, #fef3c7, #fce7f3);
+    color: #8b5cf6;
+  }
+  .game-card.color-sequence:hover:not(.disabled) {
     border-color: #8b5cf6;
     box-shadow: 0 16px 40px rgba(139,92,246,0.18);
   }
-  .game-card.color-card .play-btn {
-    color: #8b5cf6;
+  .game-card.color-sequence .play-btn { color: #8b5cf6; }
+  .game-card.color-sequence .badge { background: #ede9fe; color: #8b5cf6; }
+
+  .game-card.spelling .icon {
+    background: linear-gradient(135deg, #fce7f3, #ffe4e6);
+    color: #ec4899;
   }
+  .game-card.spelling:hover:not(.disabled) {
+    border-color: #ec4899;
+    box-shadow: 0 16px 40px rgba(236,72,153,0.18);
+  }
+  .game-card.spelling .play-btn { color: #ec4899; }
+  .game-card.spelling .badge { background: #fce7f3; color: #ec4899; }
+
   .game-card h3 {
     font-size: 18px;
     font-weight: 800;
@@ -109,7 +129,6 @@
     gap: 6px;
     font-size: 14px;
     font-weight: 700;
-    color: #6366f1;
     margin-top: 4px;
   }
   .game-card .play-btn::after {
@@ -133,14 +152,8 @@
     font-weight: 700;
     padding: 3px 8px;
     border-radius: 6px;
-    background: #eef0ff;
-    color: #6366f1;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-  }
-  .game-card .badge.live-color {
-    background: #ede9fe;
-    color: #8b5cf6;
   }
   .game-card .badge.coming {
     background: #fef3c7;
@@ -176,31 +189,31 @@
 
     <div class="games-grid">
       <!-- Mystery Box -->
-      <a href="mystery-box/" class="game-card">
+      <a href="mystery-box/" class="game-card mystery-box">
         <span class="badge">Live</span>
         <div class="icon">🎁</div>
         <h3>Mystery Box</h3>
-        <p>Listen to a code, enter it on the keypad, and win prizes from the mystery chest. Includes math mode.</p>
+        <p>Listen to a secret code, enter it on the keypad, and open the chest to win prizes. Includes math mode and adjustable digit length.</p>
         <span class="play-btn">Play now</span>
       </a>
 
       <!-- Color Sequence -->
-      <a href="color-sequence/" class="game-card color-card">
-        <span class="badge live-color">Live</span>
+      <a href="color-sequence/" class="game-card color-sequence">
+        <span class="badge">Live</span>
         <div class="icon">🎨</div>
         <h3>Color Sequence</h3>
-        <p>Watch the color order, remember it, and click the colors back in the same order. Memory + color recognition.</p>
+        <p>Watch the color order, remember it, and click the colors back in the same sequence. Memory + color recognition.</p>
         <span class="play-btn">Play now</span>
       </a>
 
-      <!-- Placeholder -->
-      <div class="game-card disabled">
-        <span class="badge coming">Soon</span>
-        <div class="icon">🔤</div>
-        <h3>Word Spelling</h3>
-        <p>Spelling challenge with audio prompts. Coming soon.</p>
-        <span class="play-btn">Coming soon</span>
-      </div>
+      <!-- Spelling -->
+      <a href="spelling/" class="game-card spelling">
+        <span class="badge">Live</span>
+        <div class="icon">✏️</div>
+        <h3>Spelling</h3>
+        <p>Listen and watch the word blink, then spell it letter by letter. Numbers and colors vocabulary.</p>
+        <span class="play-btn">Play now</span>
+      </a>
     </div>
 
     <footer>
