@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pancasila Level Up Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --primary: #6366f1; --primary-hover: #4f46e5;
+    --bg: #f7f8fb; --card-bg: #ffffff;
+    --text: #1a1d2e; --text-muted: #6b7280;
+    --heart: #ef4444; --heart-lost: #e5e7eb;
+    --success: #10b981; --danger: #ef4444;
+    --gold: #fbbf24; --gold-dark: #f59e0b;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: linear-gradient(135deg, #f7f8fb 0%, #eef0f7 100%);
+    color: var(--text); min-height: 100vh;
+    display: flex; justify-content: center; align-items: center;
+    overflow-x: hidden;
+  }
+
+  /* ================= SCREENS ================= */
+  .screen { display: none; width: 100%; max-width: 900px; padding: 20px; }
+  .screen.active { display: flex; flex-direction: column; align-items: center; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ================= SETUP SCREEN ================= */
+  .setup-card {
+    background: var(--card-bg); border-radius: 24px; padding: 30px;
+    box-shadow: 0 20px 60px rgba(26,29,46,0.08); width: 100%; max-width: 600px; text-align: center;
+  }
+  .setup-header h1 { font-family: 'Fredoka', sans-serif; font-size: 28px; color: var(--primary); margin-bottom: 5px; }
+  .setup-header p { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+  
+  .input-group { text-align: left; margin-bottom: 15px; }
+  .input-group label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; display: block; }
+  .input-group input { width: 100%; padding: 12px 15px; border: 2px solid #e5e7eb; border-radius: 12px; font-family: inherit; font-size: 15px; outline: none; transition: 0.2s; }
+  .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  
+  .player-list-container { margin: 20px 0; text-align: left; }
+  .player-list-container label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; display: block; }
+  
+  .player-input-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .player-input-row input { padding: 12px; border: 2px solid #e5e7eb; border-radius: 12px; outline: none; font-family: inherit; font-size: 14px; transition: 0.2s; }
+  .player-input-row input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  .player-input-row .inp-name { flex: 2; }
+  .player-input-row .inp-grade { flex: 1; min-width: 90px; }
+  .player-input-row button { padding: 0 20px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+  .player-input-row button:hover { background: var(--primary-hover); }
+  
+  #setupPlayerList { list-style: none; background: #fafbfd; border: 1px solid #e5e7eb; border-radius: 12px; max-height: 150px; overflow-y: auto; margin-bottom: 10px; }
+  #setupPlayerList li { padding: 10px 15px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; }
+  #setupPlayerList li:last-child { border-bottom: none; }
+  #setupPlayerList li .student-info { display: flex; gap: 10px; align-items: center; }
+  #setupPlayerList li .student-grade { color: var(--primary); font-size: 12px; background: #eef0ff; padding: 2px 8px; border-radius: 10px; }
+  #setupPlayerList li .remove { color: var(--danger); cursor: pointer; background: none; border: none; font-weight: 800; font-size: 16px; }
+  
+  .btn-start { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #422006; border: none; border-radius: 12px; font-family: 'Fredoka', sans-serif; font-size: 20px; font-weight: 800; cursor: pointer; box-shadow: 0 6px 20px rgba(251,191,36,0.4); transition: 0.2s; margin-top: 10px; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(251,191,36,0.5); }
+  .btn-start:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* ================= SHUFFLE SCREEN ================= */
+  .shuffle-card {
+    background: var(--card-bg); border-radius: 24px; padding: 40px 30px;
+    box-shadow: 0 20px 60px rgba(26,29,46,0.08); width: 100%; max-width: 500px; text-align: center;
+    border: 4px solid var(--gold);
+  }
+  .shuffle-title { font-size: 16px; font-weight: 700; color: var(--text-muted); margin-bottom: 15px; }
+  .rolling-name { font-family: 'Fredoka', sans-serif; font-size: 42px; font-weight: 800; color: var(--primary); min-height: 55px; text-shadow: 0 4px 10px rgba(99,102,241,0.2); }
+  .rolling-name.settled { animation: settle 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes settle { 0% { transform: scale(0.8); } 60% { transform: scale(1.1); } 100% { transform: scale(1); } }
+  .remaining-count { font-size: 14px; font-weight: 600; color: var(--text-muted); margin-top: 20px; }
+
+  /* ================= WELCOME SCREEN ================= */
+  .welcome-card {
+    background: var(--card-bg); border-radius: 24px; padding: 40px 30px;
+    box-shadow: 0 20px 60px rgba(26,29,46,0.08); width: 100%; max-width: 500px; text-align: center;
+    border: 4px solid var(--primary);
+  }
+  .welcome-emoji { font-size: 60px; margin-bottom: 15px; animation: floatEmoji 3s infinite ease-in-out; }
+  @keyframes floatEmoji { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+  .welcome-title { font-family: 'Fredoka', sans-serif; font-size: 24px; color: var(--text-muted); margin-bottom: 5px; }
+  .welcome-name { font-family: 'Fredoka', sans-serif; font-size: 38px; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+  .welcome-grade { font-size: 14px; font-weight: 700; color: var(--gold-dark); background: #fffbeb; display: inline-block; padding: 5px 15px; border-radius: 99px; margin-bottom: 25px; }
+  .welcome-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; }
+  
+  .audio-loading-indicator {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-size: 13px; font-weight: 700; color: var(--primary);
+    margin-bottom: 20px; background: #eef0ff; padding: 10px; border-radius: 10px;
+  }
+  .spinner {
+    width: 16px; height: 16px; border: 3px solid #c7d2fe; border-top-color: var(--primary);
+    border-radius: 50%; animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ================= QUIZ SCREEN ================= */
+  .quiz-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .q-counter { background: var(--card-bg); padding: 8px 20px; border-radius: 99px; font-weight: 800; color: var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-size: 16px; }
+  .score-box { background: var(--card-bg); padding: 8px 20px; border-radius: 99px; font-weight: 800; color: var(--gold-dark); box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-size: 16px; }
+  .current-student { font-size: 14px; font-weight: 700; color: var(--text-muted); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+  
+  /* HEARTS */
+  .hearts-container { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+  .heart { font-size: 28px; transition: 0.3s; }
+  .heart.beat { animation: heartbeat 1.2s infinite; }
+  .heart.lost { filter: grayscale(1); opacity: 0.3; animation: none; }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.3); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.15); }
+    56% { transform: scale(1); }
+  }
+
+  /* AUDIO BUTTON */
+  .audio-btn { 
+    background: linear-gradient(135deg, var(--primary), #8b5cf6); color: white; 
+    border: none; width: 100px; height: 100px; border-radius: 50%; 
+    font-size: 40px; cursor: pointer; box-shadow: 0 10px 30px rgba(99,102,241,0.4); 
+    margin-bottom: 30px; display: flex; align-items: center; justify-content: center; 
+    transition: 0.2s; position: relative;
+  }
+  .audio-btn:hover { transform: scale(1.05); }
+  .audio-btn.playing { animation: pulse-ring 1.5s infinite; }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(99,102,241,0.7); }
+    70% { box-shadow: 0 0 0 25px rgba(99,102,241,0); }
+    100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
+  }
+
+  /* OPTIONS */
+  .options-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 800px; margin-bottom: 20px; }
+  .option-card {
+    background: var(--card-bg); border: 3px solid transparent; border-radius: 20px;
+    padding: 10px; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    transition: 0.2s; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
+  }
+  .option-card:hover:not(.disabled) { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 12px 25px rgba(251,191,36,0.2); }
+  .option-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+  .option-card.fallback-emoji { font-size: 60px; background: #f0fdf4; }
+  .option-card.correct { border-color: var(--success); background: #ecfdf5; transform: scale(1.05); box-shadow: 0 0 30px rgba(16,185,129,0.3); }
+  .option-card.wrong { border-color: var(--danger); background: #fef2f2; animation: shake 0.4s; }
+  .option-card.disabled { pointer-events: none; opacity: 0.5; }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+  /* ================= CERTIFICATE ================= */
+  .certificate-card {
+    background: #fff; border-radius: 20px; padding: 40px; border: 8px double var(--gold);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1); width: 100%; max-width: 750px; text-align: center; position: relative;
+  }
+  .cert-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--primary); margin-bottom: 10px; background: linear-gradient(135deg, #4338ca, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .cert-sub { font-size: 14px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
+  .cert-name { font-family: 'Fredoka', sans-serif; font-size: 42px; color: var(--text); margin: 15px 0; border-bottom: 2px dashed #e5e7eb; display: inline-block; padding: 0 20px 10px 20px; }
+  .cert-score { font-size: 60px; font-weight: 900; color: var(--gold-dark); margin: 20px 0; }
+  .cert-score span { font-size: 24px; color: var(--text-muted); }
+  
+  .cert-details {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px; margin: 25px 0; padding: 20px;
+    background: #fafbfd; border: 2px dashed #e5e7eb; border-radius: 16px; text-align: left;
+  }
+  .cert-detail-item { display: flex; align-items: center; gap: 10px; }
+  .cert-detail-item .detail-icon { font-size: 22px; flex-shrink: 0; }
+  .cert-detail-item .detail-text { display: flex; flex-direction: column; font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.3; }
+  .cert-detail-item .detail-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+
+  .cert-qr { margin: 30px 0; display: flex; justify-content: center; }
+  .cert-footer { font-size: 12px; color: #9ca3af; margin-top: 20px; }
+  
+  .action-buttons { display: flex; gap: 15px; margin-top: 30px; width: 100%; max-width: 600px; }
+  .btn-action { flex: 1; padding: 15px; border-radius: 12px; font-weight: 800; font-size: 16px; cursor: pointer; border: none; transition: 0.2s; }
+  .btn-print { background: var(--primary); color: white; box-shadow: 0 6px 20px rgba(99,102,241,0.3); }
+  .btn-next { background: var(--success); color: white; box-shadow: 0 6px 20px rgba(16,185,129,0.3); }
+  .btn-next:hover { background: #059669; transform: translateY(-2px); }
+  .btn-finish { background: var(--gold-dark); color: white; box-shadow: 0 6px 20px rgba(245,158,11,0.3); }
+  .btn-finish:hover { background: #d97706; transform: translateY(-2px); }
+
+  @media (max-width: 768px) {
+    .options-grid { grid-template-columns: 1fr; gap: 10px; }
+    .option-card { aspect-ratio: 2.5/1; flex-direction: row; gap: 10px; justify-content: flex-start; padding: 15px; }
+    .option-card img { width: 80px; height: 80px; }
+    .option-card.fallback-emoji { font-size: 40px; justify-content: center; }
+    .cert-name { font-size: 28px; }
+    .cert-score { font-size: 40px; }
+    .action-buttons { flex-direction: column; }
+    .player-input-row { flex-direction: column; }
+    .player-input-row .inp-grade { min-width: 100%; }
+    .cert-details { grid-template-columns: 1fr 1fr; padding: 15px; gap: 10px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .setup-card, .action-buttons, #quizScreen, #shuffleScreen, #welcomeScreen { display: none !important; }
+    .screen { display: block !important; }
+    .certificate-card { box-shadow: none; border-color: var(--gold); }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= 1. SETUP SCREEN ================= -->
+  <div class="screen active" id="setupScreen">
+    <div class="setup-card">
+      <div class="setup-header">
+        <h1>🌟 Pancasila Level Up Quiz</h1>
+        <p>Add students, then click Shuffle to start!</p>
+      </div>
+
+      <div class="input-group">
+        <label>🏫 School Name</label>
+        <input type="text" id="inpSchool" value="Amed Honeycomb School">
+      </div>
+
+      <div class="player-list-container">
+        <label>👥 Student List (Min. 1)</label>
+        <div class="player-input-row">
+          <input type="text" id="inpStudentName" class="inp-name" placeholder="Student name...">
+          <input type="text" id="inpStudentGrade" class="inp-grade" placeholder="Grade..." value="Grade 1">
+          <button id="btnAddPlayer">Add</button>
+        </div>
+        <ul id="setupPlayerList"></ul>
+      </div>
+
+      <button class="btn-start" id="btnShuffle" disabled>🎲 Save & Shuffle First Student</button>
+    </div>
+  </div>
+
+  <!-- ================= 2. SHUFFLE SCREEN ================= -->
+  <div class="screen" id="shuffleScreen">
+    <div class="shuffle-card">
+      <div class="shuffle-title">🎲 Randomly selecting a student...</div>
+      <div class="rolling-name" id="rollingName">???</div>
+      <div class="remaining-count" id="remainingCountDisplay">Remaining students: 0</div>
+    </div>
+  </div>
+
+  <!-- ================= 3. WELCOME / TRANSITION SCREEN ================= -->
+  <div class="screen" id="welcomeScreen">
+    <div class="welcome-card">
+      <div class="welcome-emoji">🎉</div>
+      <div class="welcome-title">Welcome to the Quiz,</div>
+      <div class="welcome-name" id="welcomeNameDisplay">-</div>
+      <div class="welcome-grade" id="welcomeGradeDisplay">Grade 1</div>
+      
+      <div class="welcome-desc">
+        Get ready! Listen carefully to the audio questions and choose the right picture.
+      </div>
+
+      <div class="audio-loading-indicator" id="audioLoadingIndicator">
+        <div class="spinner"></div> Loading Audio...
+      </div>
+
+      <button class="btn-start" id="btnActuallyStart" disabled>▶️ Start Quiz Now</button>
+    </div>
+  </div>
+
+  <!-- ================= 4. QUIZ SCREEN ================= -->
+  <div class="screen" id="quizScreen">
+    <div class="quiz-header">
+      <div class="q-counter" id="qCounter">Question 1 / 15</div>
+      <div class="score-box" id="scoreBox">⭐ 0</div>
+    </div>
+    
+    <div class="current-student" id="currentStudentDisplay">Player: -</div>
+
+    <div class="hearts-container" id="heartsContainer">
+      <div class="heart beat">❤️</div>
+      <div class="heart beat">❤️</div>
+    </div>
+
+    <button class="audio-btn" id="audioBtn" onclick="playQuestionAudio()">🔊</button>
+
+    <div class="options-grid" id="optionsGrid"></div>
+  </div>
+
+  <!-- ================= 5. CERTIFICATE SCREEN ================= -->
+  <div class="screen" id="certScreen">
+    <div class="certificate-card" id="certificate">
+      <div style="font-size: 50px; margin-bottom: 10px;">🏆</div>
+      <div class="cert-title">Certificate of Achievement</div>
+      <div class="cert-sub">Pancasila Education · Level Up Quiz</div>
+      
+      <div>This certificate is proudly presented to</div>
+      <div class="cert-name" id="certStudentName">-</div>
+      
+      <div class="cert-score" id="certScore">0 <span>/ 15</span></div>
+      
+      <div class="cert-details">
+        <div class="cert-detail-item">
+          <div class="detail-icon">🏫</div>
+          <div class="detail-text"><span class="detail-label">School</span><span id="certSchool">-</span></div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="detail-icon">📚</div>
+          <div class="detail-text"><span class="detail-label">Class</span><span id="certClass">-</span></div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="detail-icon">📖</div>
+          <div class="detail-text"><span class="detail-label">Subject</span>Pancasila Education</div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="detail-icon">📅</div>
+          <div class="detail-text"><span class="detail-label">Date</span><span id="certDate">-</span></div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="detail-icon">⏱️</div>
+          <div class="detail-text"><span class="detail-label">Time</span><span id="certTime">-</span></div>
+        </div>
+      </div>
+
+      <div class="cert-qr" id="qrcode"></div>
+      <div class="cert-footer">Amed Honeycomb School · Interactive Learning</div>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="btn-action btn-print" onclick="window.print()">🖨️ Print Certificate</button>
+      <button class="btn-action btn-next" id="btnNextStudent" onclick="nextStudent()">▶️ Next Student</button>
+    </div>
+  </div>
+
+<script>
+/* =========================================
+   QUIZ DATA
+   ========================================= */
+const questionData = [
+  { id: 1, emoji: ["🤢", "🙏", "📺"], correct: 1, text: "You wake up in the morning and want to eat breakfast. What should you do first?", options: ["Start eating loudly", "Say a prayer and thank God", "Watch TV while eating"] },
+  { id: 2, emoji: ["👂", "🗣️", "🏃"], correct: 0, text: "The teacher is explaining a new lesson in class. What is the right thing to do?", options: ["Listen quietly to the teacher", "Talk to your friend", "Run around the classroom"] },
+  { id: 3, emoji: ["🧸", "🫣", "📦"], correct: 2, text: "You are playing with your toys, but it is time for school. What should you do?", options: ["Leave the toys on the floor", "Hide the toys under the bed", "Put the toys back in the box"] },
+  { id: 4, emoji: ["🚪", "🙋", "😭"], correct: 1, text: "You want to go to the bathroom during class. What should you do?", options: ["Just walk out of the class", "Raise your hand and ask the teacher", "Cry loudly"] },
+  { id: 5, emoji: ["👋", "👉", "🚶"], correct: 0, text: "You see a new student standing alone in the school yard. What do you do?", options: ["Say hello and ask them to play", "Point at them and laugh", "Ignore them and walk away"] },
+  { id: 6, emoji: ["🤢", "😂", "🤝"], correct: 2, text: "Your friend has a different skin color and speaks a different language. How do you treat them?", options: ["Refuse to sit next to them", "Make fun of how they speak", "Be kind and play together"] },
+  { id: 7, emoji: ["😂", "🤝", "📸"], correct: 1, text: "Your friend falls down and hurts their knee. What is the best thing to do?", options: ["Laugh at them", "Help them stand up", "Take a photo of them"] },
+  { id: 8, emoji: ["🍪", "🍪🍪", "🫣"], correct: 0, text: "You have four cookies and your friend has none. What do you do?", options: ["Give two cookies to your friend", "Eat all the cookies by yourself", "Hide the cookies in your pocket"] },
+  { id: 9, emoji: ["😡", "👇", "🔄"], correct: 2, text: "There is only one swing in the park, and many kids want to play. What is fair?", options: ["Take the swing all day", "Push other kids away", "Take turns on the swing"] },
+  { id: 10, emoji: ["🍔", "🥪", "👉"], correct: 1, text: "Your friend forgot to bring their lunch box. What can you do?", options: ["Eat your food in front of them", "Share your food with your friend", "Tell them to buy their own food"] },
+  { id: 11, emoji: ["🤝", "🥊", "💔"], correct: 0, text: "You and your friends want to play a game, but you all want different games. How do you solve this?", options: ["Talk together and vote", "Fight until someone wins", "Go home and play alone"] },
+  { id: 12, emoji: ["🗑️", "🚶", "🧹"], correct: 2, text: "The classroom is very messy after art class. What should the class do?", options: ["Wait for the janitor to clean it", "Leave the mess and go home", "Clean it up together"] },
+  { id: 13, emoji: ["🏃", "🤝", "👉"], correct: 1, text: "Your friend is carrying heavy books. What do you do?", options: ["Walk ahead and leave them", "Help them carry some books", "Tell them to walk faster"] },
+  { id: 14, emoji: ["👍", "🙅", "🙉"], correct: 0, text: "You are the leader of your group. One of your friends has a great idea. What should you do?", options: ["Listen to their idea", "Ignore their idea", "Tell them to be quiet"] },
+  { id: 15, emoji: ["🤬", "😡", "🤝"], correct: 2, text: "Someone accidentally steps on your foot and says 'I'm sorry.' What is the best response?", options: ["Push them back", "Yell at them", "Say 'That's okay, no problem'"] }
+];
+
+/* =========================================
+   STATE & LOGIC
+   ========================================= */
+let allPlayers = [];         
+let remainingPlayers = [];   
+let selectedPlayer = null;   
+let currentIndex = 0;
+let score = 0;
+let attempts = 2;
+let isProcessing = false;
+let audioCtx = null;
+let startTime;
+let activeAudio = null;
+
+/* =========================================
+   DOM ELEMENTS
+   ========================================= */
+const setupScreen = document.getElementById('setupScreen');
+const shuffleScreen = document.getElementById('shuffleScreen');
+const welcomeScreen = document.getElementById('welcomeScreen');
+const quizScreen = document.getElementById('quizScreen');
+const certScreen = document.getElementById('certScreen');
+
+const btnAddPlayer = document.getElementById('btnAddPlayer');
+const inpStudentName = document.getElementById('inpStudentName');
+const inpStudentGrade = document.getElementById('inpStudentGrade');
+const setupPlayerList = document.getElementById('setupPlayerList');
+const btnShuffle = document.getElementById('btnShuffle');
+
+const rollingName = document.getElementById('rollingName');
+const remainingCountDisplay = document.getElementById('remainingCountDisplay');
+
+const welcomeNameDisplay = document.getElementById('welcomeNameDisplay');
+const welcomeGradeDisplay = document.getElementById('welcomeGradeDisplay');
+const btnActuallyStart = document.getElementById('btnActuallyStart');
+const audioLoadingIndicator = document.getElementById('audioLoadingIndicator');
+
+const qCounter = document.getElementById('qCounter');
+const scoreBox = document.getElementById('scoreBox');
+const currentStudentDisplay = document.getElementById('currentStudentDisplay');
+const heartsContainer = document.getElementById('heartsContainer');
+const audioBtn = document.getElementById('audioBtn');
+const optionsGrid = document.getElementById('optionsGrid');
+
+const btnNextStudent = document.getElementById('btnNextStudent');
+
+/* =========================================
+   AUDIO MANAGER (TANPA TTS)
+   ========================================= */
+function stopAllAudio() {
+  if (activeAudio) {
+    activeAudio.pause();
+    activeAudio.currentTime = 0;
+    activeAudio = null;
+  }
+  if (audioBtn) audioBtn.classList.remove('playing');
+}
+
+// Fungsi playAudioFile tanpa fallback TTS
+function playAudioFile(src, btnElement = null, onComplete = null) {
+  stopAllAudio(); 
+  if (btnElement) btnElement.classList.add('playing');
+  
+  const audio = new Audio(src);
+  activeAudio = audio;
+  
+  const finish = () => {
+    if (btnElement) btnElement.classList.remove('playing');
+    if (activeAudio === audio) activeAudio = null;
+    if (onComplete) onComplete();
+  };
+
+  audio.onended = finish;
+  audio.onerror = finish; // Jika error, langsung selesai (tidak ada TTS)
+  audio.play().catch(finish);
+}
+
+/* =========================================
+   SETUP LISTENERS
+   ========================================= */
+btnAddPlayer.addEventListener('click', () => {
+  const name = inpStudentName.value.trim();
+  const grade = inpStudentGrade.value.trim() || 'Grade 1';
+  
+  if(name && allPlayers.length < 10) {
+    allPlayers.push({ name: name, grade: grade });
+    inpStudentName.value = '';
+    inpStudentName.focus();
+    renderPlayerList();
+  }
+});
+
+inpStudentName.addEventListener('keypress', (e) => { if(e.key === 'Enter') btnAddPlayer.click(); });
+inpStudentGrade.addEventListener('keypress', (e) => { if(e.key === 'Enter') btnAddPlayer.click(); });
+
+function renderPlayerList() {
+  setupPlayerList.innerHTML = allPlayers.map((p, i) => `
+    <li>
+      <div class="student-info">
+        ${p.name} <span class="student-grade">${p.grade}</span>
+      </div>
+      <button class="remove" onclick="removePlayer(${i})">✕</button>
+    </li>
+  `).join('');
+  btnShuffle.disabled = allPlayers.length < 1;
+}
+
+window.removePlayer = (idx) => {
+  allPlayers.splice(idx, 1);
+  renderPlayerList();
+};
+
+/* =========================================
+   SHUFFLE LOGIC (MULTI-PLAYER)
+   ========================================= */
+btnShuffle.addEventListener('click', () => {
+  remainingPlayers = [...allPlayers];
+  setupScreen.classList.remove('active');
+  startNextTurn();
+});
+
+async function startNextTurn() {
+  if (remainingPlayers.length === 0) {
+    location.reload();
+    return;
+  }
+
+  shuffleScreen.classList.add('active');
+  remainingCountDisplay.textContent = `Remaining students: ${remainingPlayers.length}`;
+  rollingName.classList.remove('settled');
+  rollingName.textContent = '???';
+
+  const duration = 2000;
+  const tick = 80;
+  const steps = duration / tick;
+  
+  for (let i = 0; i < steps; i++) {
+    const randomPlayer = remainingPlayers[Math.floor(Math.random() * remainingPlayers.length)];
+    rollingName.textContent = randomPlayer.name;
+    playTickSound();
+    await new Promise(r => setTimeout(r, tick));
+  }
+  
+  const idx = Math.floor(Math.random() * remainingPlayers.length);
+  selectedPlayer = remainingPlayers[idx];
+  rollingName.textContent = selectedPlayer.name;
+  rollingName.classList.add('settled');
+  
+  remainingPlayers.splice(idx, 1);
+
+  setTimeout(() => {
+    shuffleScreen.classList.remove('active');
+    welcomeScreen.classList.add('active');
+    welcomeNameDisplay.textContent = selectedPlayer.name;
+    welcomeGradeDisplay.textContent = selectedPlayer.grade;
+    playIntroAudio();
+  }, 1500); 
+}
+
+/* =========================================
+   WELCOME SCREEN LOGIC 
+   ========================================= */
+function playIntroAudio() {
+  audioLoadingIndicator.style.display = 'flex';
+  btnActuallyStart.disabled = true;
+
+  const introComplete = () => {
+    audioLoadingIndicator.style.display = 'none';
+    btnActuallyStart.disabled = false;
+  };
+
+  // Mainkan intro.mp3, jika error/selesai, buka tombol Start
+  playAudioFile('audio/intro.mp3', null, introComplete);
+  
+  // Safety timeout (jika audio hang atau file tidak ditemukan)
+  setTimeout(() => {
+    if (btnActuallyStart.disabled) {
+      audioLoadingIndicator.style.display = 'none';
+      btnActuallyStart.disabled = false;
+    }
+  }, 5000);
+}
+
+btnActuallyStart.addEventListener('click', () => {
+  stopAllAudio();
+  welcomeScreen.classList.remove('active');
+  quizScreen.classList.add('active');
+  currentStudentDisplay.textContent = `Player: ${selectedPlayer.name} (${selectedPlayer.grade})`;
+  startQuiz();
+});
+
+/* =========================================
+   QUIZ LOGIC
+   ========================================= */
+function startQuiz() {
+  currentIndex = 0;
+  score = 0;
+  startTime = Date.now();
+  scoreBox.textContent = `⭐ 0`;
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if(currentIndex >= questionData.length) {
+    endQuiz();
+    return;
+  }
+
+  isProcessing = false;
+  attempts = 2;
+  updateHearts();
+  
+  const q = questionData[currentIndex];
+  qCounter.textContent = `Question ${currentIndex + 1} / ${questionData.length}`;
+  
+  optionsGrid.innerHTML = '';
+  for (let i = 0; i < 3; i++) {
+    const card = document.createElement('div');
+    card.className = 'option-card';
+    
+    const img = document.createElement('img');
+    img.src = `images/q${q.id}_${['A','B','C'][i]}.png`;
+    
+    img.onerror = () => {
+      img.style.display = 'none';
+      card.classList.add('fallback-emoji');
+      card.innerHTML = `<span>${q.emoji[i]}</span>`;
+    };
+    
+    card.appendChild(img);
+    card.onclick = () => handleAnswer(i, card);
+    optionsGrid.appendChild(card);
+  }
+  
+  setTimeout(() => playQuestionAudio(), 800);
+}
+
+function updateHearts() {
+  heartsContainer.innerHTML = '';
+  for(let i=0; i<2; i++) {
+    const h = document.createElement('div');
+    h.className = `heart ${i < attempts ? 'beat' : 'lost'}`;
+    h.textContent = '❤️';
+    heartsContainer.appendChild(h);
+  }
+}
+
+function handleAnswer(selectedIdx, cardElement) {
+  if(isProcessing) return;
+  const q = questionData[currentIndex];
+  
+  if(selectedIdx === q.correct) {
+    isProcessing = true;
+    stopAllAudio();
+    cardElement.classList.add('correct');
+    score += (attempts === 2 ? 1 : 0.5); 
+    scoreBox.textContent = `⭐ ${score}`;
+    createConfetti();
+    playSuccessSound();
+
+    setTimeout(() => {
+      currentIndex++;
+      loadQuestion();
+    }, 2000); 
+    
+  } else {
+    attempts--;
+    updateHearts();
+    cardElement.classList.add('wrong');
+    cardElement.classList.add('disabled');
+    
+    stopAllAudio(); 
+    playWrongSound();
+    
+    if(attempts === 0) {
+      isProcessing = true;
+      setTimeout(() => {
+        const correctCard = optionsGrid.children[q.correct];
+        correctCard.classList.add('correct');
+        correctCard.classList.remove('disabled');
+      }, 500);
+      
+      setTimeout(() => {
+        currentIndex++;
+        loadQuestion();
+      }, 3000);
+    } else {
+      setTimeout(() => {
+        cardElement.classList.remove('wrong');
+        cardElement.classList.remove('disabled');
+      }, 1200);
+    }
+  }
+}
+
+function playQuestionAudio() {
+  const q = questionData[currentIndex];
+  // Mainkan audio soal, tanpa fallback TTS
+  playAudioFile(`audio/q${q.id}.mp3`, audioBtn);
+}
+
+/* =========================================
+   END GAME & CERTIFICATE
+   ========================================= */
+function endQuiz() {
+  const elapsedTime = Date.now() - startTime;
+  const totalSeconds = Math.floor(elapsedTime / 1000);
+  const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+  const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+  
+  stopAllAudio();
+  // Mainkan audio menang, tanpa fallback TTS
+  playAudioFile('audio/menang.mp3');
+
+  quizScreen.classList.remove('active');
+  certScreen.classList.add('active');
+  
+  document.getElementById('certStudentName').textContent = selectedPlayer.name;
+  document.getElementById('certScore').innerHTML = `${score} <span>/ ${questionData.length}</span>`;
+  document.getElementById('certSchool').textContent = document.getElementById('inpSchool').value || 'Amed Honeycomb School';
+  document.getElementById('certClass').textContent = selectedPlayer.grade;
+  document.getElementById('certDate').textContent = new Date().toLocaleDateString('en-US');
+  document.getElementById('certTime').textContent = `${minutes}:${seconds}`;
+  
+  const qrContainer = document.getElementById('qrcode');
+  qrContainer.innerHTML = '';
+  if(typeof QRCode !== 'undefined') {
+    const qrData = `Pancasila Education Quiz\nName: ${selectedPlayer.name}\nGrade: ${selectedPlayer.grade}\nScore: ${score}/${questionData.length}\nTime: ${minutes}:${seconds}\nSchool: ${document.getElementById('inpSchool').value}`;
+    new QRCode(qrContainer, {
+      text: qrData,
+      width: 100,
+      height: 100,
+      colorDark: "#4338ca",
+      colorLight: "#ffffff"
+    });
+  }
+
+  if (remainingPlayers.length > 0) {
+    btnNextStudent.textContent = '▶️ Next Student';
+    btnNextStudent.className = 'btn-action btn-next';
+    btnNextStudent.disabled = false;
+  } else {
+    btnNextStudent.textContent = '🏁 Finish Game';
+    btnNextStudent.className = 'btn-action btn-finish';
+    btnNextStudent.disabled = false;
+  }
+}
+
+function nextStudent() {
+  stopAllAudio();
+  if (remainingPlayers.length > 0) {
+    certScreen.classList.remove('active');
+    startNextTurn();
+  } else {
+    alert("All students have completed the quiz! Great job, everyone! 🎉");
+    location.reload(); 
+  }
+}
+
+/* =========================================
+   SOUND EFFECTS (Web Audio API)
+   ========================================= */
+function getAudioCtx() {
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function playTickSound() {
+  const ctx = getAudioCtx(); if(!ctx) return;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = 'square'; osc.frequency.value = 800;
+  gain.gain.setValueAtTime(0.05, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(); osc.stop(ctx.currentTime + 0.05);
+}
+
+function playSuccessSound() {
+  const ctx = getAudioCtx(); if(!ctx) return;
+  [523, 659, 784, 1047].forEach((freq, i) => {
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    const start = ctx.currentTime + i * 0.1;
+    gain.gain.setValueAtTime(0.1, start);
+    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.3);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(start); osc.stop(start + 0.3);
+  });
+}
+
+function playWrongSound() {
+  const ctx = getAudioCtx(); if(!ctx) return;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.3);
+  gain.gain.setValueAtTime(0.1, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(); osc.stop(ctx.currentTime + 0.3);
+}
+
+function createConfetti() {
+  for(let i=0; i<20; i++) {
+    const c = document.createElement('div');
+    c.style.position = 'fixed'; c.style.left = '50%'; c.style.top = '50%';
+    c.style.width = '10px'; c.style.height = '10px';
+    c.style.background = ['#ef4444', '#3b82f6', '#fbbf24', '#10b981'][Math.floor(Math.random()*4)];
+    c.style.zIndex = '9999'; c.style.borderRadius = '50%';
+    c.style.pointerEvents = 'none';
+    document.body.appendChild(c);
+    const angle = Math.random() * Math.PI * 2;
+    const velocity = 5 + Math.random() * 10;
+    const dx = Math.cos(angle) * velocity;
+    const dy = Math.sin(angle) * velocity;
+    c.animate([
+      { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+      { transform: `translate(${dx*20}px, ${dy*20}px) rotate(720deg)`, opacity: 0 }
+    ], { duration: 1000, easing: 'ease-out' });
+    setTimeout(() => c.remove(), 1000);
+  }
+}
+</script>
+</body>
+</html>
