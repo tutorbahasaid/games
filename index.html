@@ -123,6 +123,18 @@
   .game-card.garuda-puzzle .play-btn { color: #e53935; }
   .game-card.garuda-puzzle .badge { background: #ffebee; color: #e53935; }
 
+  /* TEMA BARU: Pancasila Level Up */
+  .game-card.pancasila-level-up .icon {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    color: #f59e0b;
+  }
+  .game-card.pancasila-level-up:hover:not(.disabled) {
+    border-color: #f59e0b;
+    box-shadow: 0 16px 40px rgba(245,158,11,0.18);
+  }
+  .game-card.pancasila-level-up .play-btn { color: #f59e0b; }
+  .game-card.pancasila-level-up .badge { background: #fffbeb; color: #f59e0b; }
+
   .game-card h3 {
     font-size: 18px;
     font-weight: 800;
@@ -232,6 +244,15 @@
         <div class="icon">🦅</div>
         <h3>Garuda Puzzle</h3>
         <p>Solve Pancasila-themed puzzles — arrange the Garuda, Perisai, or story sequence. Educational and fun for classroom.</p>
+        <span class="play-btn">Play now</span>
+      </a>
+
+      <!-- Pancasila Level Up (Diperbarui ke folder levelup) -->
+      <a href="levelup/" class="game-card pancasila-level-up">
+        <span class="badge">Live</span>
+        <div class="icon">🌟</div>
+        <h3>Pancasila Level Up</h3>
+        <p>Listen to the audio, choose the right picture, and win a certificate! Multi-player quiz about daily Pancasila values.</p>
         <span class="play-btn">Play now</span>
       </a>
     </div>
