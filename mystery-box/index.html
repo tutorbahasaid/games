@@ -133,6 +133,34 @@
     margin-top: 8px;
   }
   .audio-progress.done { background: #ecfdf5; color: #10b981; }
+  
+    /* ===== START GAME BUTTON ===== */
+  .btn-start {
+    width: 100%;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: #fff;
+    border: none;
+    padding: 16px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  }
+  .btn-start:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.45);
+  }
+  .btn-start:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  .btn-start:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 
   /* ===== PRIZE SETTINGS ===== */
   .prize-settings {
